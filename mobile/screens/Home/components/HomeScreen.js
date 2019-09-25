@@ -1,14 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Container } from 'native-base';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-      </View>
+      <Container style={{ backgroundColor: '#FFF' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Home Screen</Text>
+        </View>
+        <FooterBar screen={tabScreens.home} />
+      </Container>
     );
   }
 }
