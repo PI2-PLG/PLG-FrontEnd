@@ -1,4 +1,5 @@
 export default screens = {
     HOME: 'Home',
-    GRAPHICS: 'Graphics'
+    GRAPHICS: 'Graphics',
+    NOTIFICATIONS: 'Notifications',
 };

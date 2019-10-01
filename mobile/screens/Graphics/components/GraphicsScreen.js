@@ -11,7 +11,7 @@ class GraphicsScreen extends React.Component {
     return (
     <Container>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Graphics Screen</Text>
+            <Text>Gráficooos</Text>
         </View>
         <FooterBar screen={tabScreens.graphics} />
     </Container>

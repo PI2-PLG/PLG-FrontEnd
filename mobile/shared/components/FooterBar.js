@@ -14,6 +14,7 @@ class FooterBar extends Component{
         this.state = {
             home: true,
             graphics: false,
+            notifications: false,
         }
     }
     componentDidMount(){
@@ -21,19 +22,22 @@ class FooterBar extends Component{
 
         switch(screen) {
             case screens.HOME:
-                this.setState({ home: true, graphics: false });
+                this.setState({ home: true, graphics: false, notifications: false });
                 break;
             case screens.GRAPHICS:
-                this.setState({ home: false, graphics: true });
+                this.setState({ home: false, graphics: true, notifications: false});
+                break;
+            case screens.NOTIFICATIONS:
+                this.setState({ home: false, graphics: false, notifications: true });
                 break;
             default:
-                this.setState({ home: false, graphics: false });
+                this.setState({ home: false, graphics: false, notifications: false });
         }
     }
 
     render(){
         const { navigate } = this.props.navigation;
-        const { home, graphics } = this.state;
+        const { home, graphics, notifications } = this.state;
 
         return(
             <Footer>
@@ -52,6 +56,13 @@ class FooterBar extends Component{
                         <Icon active={graphics} name="ios-list-box" style={graphics ? styles.actived : styles.disabled} />
                         <Text style={[styles.text, graphics ? styles.actived : styles.disabled]}>Gráficos</Text>
                     </Button>
+                    <Button vertical
+                        active={notifications}
+                        style={notifications ? styles.activedButton : null}
+                        onPress={() => navigate(screens.NOTIFICATIONS)}>
+                        <Icon active={notifications} name="ios-notifications" style={notifications ? styles.actived : styles.disabled} />
+                        <Text style={[styles.text, notifications ? styles.actived : styles.disabled]}>Notificações</Text>
+                    </Button>
                 </FooterTab>
             </Footer>
         );
@@ -63,6 +74,7 @@ export default withNavigation(FooterBar);
 export const tabScreens = {
     home: screens.HOME,
     graphics: screens.GRAPHICS,
+    notifications: screens.NOTIFICATIONS,
 }
 
 const styles = StyleSheet.create({

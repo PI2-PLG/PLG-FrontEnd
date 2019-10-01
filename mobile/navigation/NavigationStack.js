@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 import HomeScreen from '../screens/Home';
 import GraphicsScreen from '../screens/Graphics';
+import NotificationFeed from '../screens/Notifications'
 
 
 const HomeStack = createStackNavigator(
@@ -31,10 +32,23 @@ const GraphicsStack = createStackNavigator(
     }
 );
 
+const NotificationsStack = createStackNavigator(
+    {
+        Notifications: NotificationFeed,
+    },
+    {
+        initialRouteName: 'Notifications',
+        defaultNavigationOptions: {
+            header: null,
+            gesturesEnabled: false
+        }
+    }
+);
 const switchStacks = createSwitchNavigator(
     {
         HomeScreen: HomeStack,
         GraphicsScreen: GraphicsStack,
+        NotificationFeed: NotificationsStack,
     },
     {
         initialRouteName: 'HomeScreen',
