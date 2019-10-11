@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import HomeScreen from '../screens/Home';
 import GraphicsScreen from '../screens/Graphics';
 import NotificationFeed from '../screens/Notifications'
+import LoginScreen from '../screens/Login'
 
 
 const HomeStack = createStackNavigator(
@@ -44,14 +45,29 @@ const NotificationsStack = createStackNavigator(
         }
     }
 );
+
+const LoginStack = createStackNavigator(
+    {
+        Login: LoginScreen,
+    },
+    {
+        initialRouteName: 'Login',
+        defaultNavigationOptions: {
+            header: null,
+            gesturesEnabled: false
+        }
+    }
+);
+
 const switchStacks = createSwitchNavigator(
     {
         HomeScreen: HomeStack,
         GraphicsScreen: GraphicsStack,
         NotificationFeed: NotificationsStack,
+        LoginScreen: LoginStack,
     },
     {
-        initialRouteName: 'HomeScreen',
+        initialRouteName: 'LoginScreen',
         defaultNavigationOptions: {
             header: null,
             gesturesEnabled: false
