@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Card, Content, Form, Item, Input, CardItem, Body, H1, View, Text, Right,} from 'native-base';
+import { Container, Card, Content, Form, Item, Input, CardItem, Body, H1, View, Text, Icon} from 'native-base';
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Dimensions } from "react-native";
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     image: {
         marginTop: 50,
         borderRadius: 40,
-        backgroundColor: 'rgba(3, 33, 37, 0.61)'
+        backgroundColor: 'rgba(3, 33, 37, 0.61)',
     }
   });
 
@@ -29,19 +29,34 @@ class LoginScreen extends React.Component {
             <View style={{backgroundColor: 'rgba(3, 33, 37, 0.61)', flex: 1}}>
                 <Grid style={{justifyContent: 'center', alignItems: 'center'}}>
                     <Row size={50}>
-                        <Image source={require('../../../assets/images/logo.jpeg')} style={styles.image}/>
+                        <View>
+                            <Image source={require('../../../assets/images/logo.jpeg')} style={styles.image}/>
+                            <H1>Projeto Lobo-Guará</H1>
+                        </View>
                     </Row>
                     <Row size={50}>
                         <Content style={{margin: 10, paddingBottom: 50}}>
                             <Card >
                                 <CardItem>
                                 <Content>
-                                <Form>
+                                <Form style={{paddingBottom: 40, paddingTop: 40}}>
                                     <Item>
-                                    <Input placeholder="Usuário" />
+                                    <Input 
+                                        placeholder="Usuário" 
+                                        placeholderTextColor="#BDBDBD"
+                                    />
                                     </Item>
                                     <Item last>
-                                    <Input placeholder="Senha" />
+                                    <Input 
+                                        placeholder="Senha" 
+                                        placeholderTextColor="#BDBDBD"
+                                        inputBorderColor="#1C5B2F"                                    
+                                    />
+                                    <Icon 
+                                        name='eye-off' 
+                                        type="MaterialCommunityIcons" 
+                                        style={{color: '#BDBDBD'}} 
+                                    />
                                     </Item>
                                 </Form>
                                 </Content>
