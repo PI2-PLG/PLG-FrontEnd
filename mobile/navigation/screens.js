@@ -3,4 +3,5 @@ export default screens = {
     GRAPHICS: 'Graphics',
     NOTIFICATIONS: 'Notifications',
     LOGIN: 'Login',
+    CREATE_ACCOUNT: 'CreateAccountScreen'
 };
