@@ -20,6 +20,7 @@ export default class App extends React.Component {
         EvilIcons: require('./assets/fonts/EvilIcons.ttf'),
         AntDesign: require('./assets/fonts/AntDesign.ttf'),
         Foundation: require('./assets/fonts/Foundation.ttf'),
+        Roboto_medium: require('./assets/fonts/Roboto_medium.ttf'),
         ...Ionicons.font,
       });
       this.setState({ isReady: true });
