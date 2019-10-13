@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#DD6E42',
-        width: 100,
         alignSelf: 'center', 
     }
   });
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
 class LoginScreen extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
-        
+
         return (
         <ImageBackground source={require('../../../assets/images/forest.jpg')} style={{ flex: 1, height: null, width: null, resizeMode: 'cover' }}>
             <View style={{backgroundColor: 'rgba(3, 33, 37, 0.61)', flex: 1}}>
