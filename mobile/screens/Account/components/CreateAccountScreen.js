@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Container, Header, Left, Button, Icon, Body, Title, Form, Item, Content, Input, Card, CardItem } from 'native-base';
 import { usernameValidator, passwordValidator, nameValidator, emailValidator} from '../validations'
+import InputField from '../../../shared/components/InputField'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import { StyleSheet } from 'react-native';
@@ -99,6 +100,19 @@ class CreateAccountScreen extends React.Component {
     this.setState(nameValidator(name));
     this.setState({ name })
   }
+
+  validate = (text) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+    if(reg.test(text) === false){
+    this.setState({email:text})
+    console(email)
+    return false;
+    }
+    else {
+      this.setState({email:text})
+    }
+  }
   render() {
     const { navigate } = this.props.navigation;
 
@@ -135,64 +149,43 @@ class CreateAccountScreen extends React.Component {
           <CardItem>
           <Content>
           <Form style={{paddingBottom: 25, paddingTop: 20, }}>
-              <Item>
-                <Input 
-                    placeholder="Nome Completo" 
-                    placeholderTextColor="#BDBDBD"
+              <InputField
                     value={this.state.name}
-                    onChangeText={(value) => this.__changeNameInput(value)}
-                    error={this.state.nameError}    
-                />
-                <Icon 
-                    name='account-card-details' 
-                    type="MaterialCommunityIcons" 
-                    style={{color: '#BDBDBD'}} 
-                />
-              </Item>
-              <Item>
-                <Input 
-                    placeholder="Email" 
-                    placeholderTextColor="#BDBDBD"
+                    onChangeFunction={(value) => this.__changeNameInput(value)}
+                    error={this.state.nameError}
+                    iconName='account-card-details'
+                    iconType='MaterialCommunityIcons'
+                    placeholder='Nome Completo'
+                    secure={false}
+              />
+              <InputField
                     value={this.state.email}
-                    onChangeText={(value) => this.__changeEmailInput(value)}
-                    error={this.state.emailError}      
-                />
-                <Icon 
-                    name='email' 
-                    type="MaterialCommunityIcons" 
-                    style={{color: '#BDBDBD'}} 
-                />
-              </Item>
-              <Item>
-              <Input 
-                  placeholder="Usuário" 
-                  placeholderTextColor="#BDBDBD"
-                  value={this.state.username}
-                  onChangeText={(value) => this.__changeUsernameInput(value)}    
-                  error={this.state.usernameError}  
+                    onChangeFunction={(value) => this.__changeEmailInput(value)}
+                    error={this.state.emailError}
+                    placeholder='Email'
+                    iconName='email'
+                    iconType='MaterialCommunityIcons'
+                    secure={false}
               />
-              <Icon 
-                  name='account' 
-                  type="MaterialCommunityIcons" 
-                  style={{color: '#BDBDBD'}} 
+              <InputField
+                value={this.state.username}
+                onChangeFunction={(value) => this.__changeUsernameInput(value)}
+                error={this.state.usernameError}
+                placeholder='Usuário'
+                iconName='account'
+                iconType='MaterialCommunityIcons'
+                secure={false}
               />
-              </Item>
-              <Item last>
-              <Input 
-                  placeholder="Senha" 
-                  placeholderTextColor="#BDBDBD"
-                  inputBorderColor="#1C5B2F"   
-                  secureTextEntry={true}
-                  value={this.state.password}
-                  onChangeText={(value) => this.__changePasswordInput(value)}   
-                  error={this.state.passwordError}  
+
+              <InputField
+                value={this.state.password}
+                onChangeFunction={(value) => this.__changePasswordInput(value)}
+                error={this.state.passwordError}
+                placeholder='Senha'
+                iconName='eye-off'
+                iconType='MaterialCommunityIcons'
+                secure={true}
               />
-              <Icon 
-                  name='eye-off' 
-                  type="MaterialCommunityIcons" 
-                  style={{color: '#BDBDBD'}} 
-              />
-              </Item>
           </Form>
           <Button rounded block style={btnStyle}
             onPress={() => registerForPushNotificationsAsync(this.state.name, this.state.password, this.state.username, this.state.email)}
