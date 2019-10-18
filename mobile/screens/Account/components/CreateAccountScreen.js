@@ -4,7 +4,7 @@ import { usernameValidator, passwordValidator, nameValidator, emailValidator} fr
 import InputField from '../../../shared/components/InputField'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 
 const PUSH_ENDPOINT = 'http://192.168.15.6:8000/new-user/';
 
@@ -30,7 +30,6 @@ async function registerForPushNotificationsAsync(name, password, username, email
 
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
-  alert(token)
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   return fetch(PUSH_ENDPOINT, {
@@ -50,6 +49,31 @@ async function registerForPushNotificationsAsync(name, password, username, email
         name: name,
       },
     }),
+  }).then((response) => response.json())
+  .then((responseJson) => {
+    if(responseJson.response == 'user_successfully_created'){
+      alert('Usul')
+      // Alert.alert(
+      //   'Cadastro feito com sucesso!',
+      //   [
+      //     {text: 'OK', onPress: () => console.log('OK Pressed')},
+      //   ],
+      //   {cancelable: false},
+      // );
+    } else {
+      alert('kkk')
+    }
+  //     Alert.alert(
+  //       'Esse usuário já existe!',
+  //       [
+  //         {text: 'OK', onPress: () => console.log('OK Pressed')},
+  //       ],
+  //       {cancelable: false},
+  //     );
+  //   }
+  // })
+  // .catch((error) => {
+  //   console.error(error);
   });
 }
 
