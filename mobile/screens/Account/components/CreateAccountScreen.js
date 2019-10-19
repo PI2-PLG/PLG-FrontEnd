@@ -4,7 +4,8 @@ import { usernameValidator, passwordValidator, nameValidator, emailValidator} fr
 import InputField from '../../../shared/components/InputField'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import { StyleSheet, Alert } from 'react-native';
+import { StyleSheet, Alert, BackHandler } from 'react-native';
+
 
 const PUSH_ENDPOINT = 'http://192.168.15.6:8000/new-user/';
 
@@ -25,6 +26,7 @@ class CreateAccountScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
     this.props = props;
 
@@ -38,6 +40,23 @@ class CreateAccountScreen extends React.Component {
         password: '',
         passwordError: ""
     }
+  }
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.LOGIN);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
   }
 
   async registerForPushNotificationsAsync(name, password, username, email) {
@@ -137,7 +156,7 @@ class CreateAccountScreen extends React.Component {
     }
   }
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigate, goBack } = this.props.navigation;
 
 
     isDisabled = (
