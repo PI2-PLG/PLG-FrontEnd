@@ -8,74 +8,6 @@ import { StyleSheet, Alert } from 'react-native';
 
 const PUSH_ENDPOINT = 'http://192.168.15.6:8000/new-user/';
 
-async function registerForPushNotificationsAsync(name, password, username, email) {
-  const { status: existingStatus } = await Permissions.getAsync(
-    Permissions.NOTIFICATIONS
-  );
-  let finalStatus = existingStatus;
-
-  // only ask if permissions have not already been determined, because
-  // iOS won't necessarily prompt the user a second time.
-  if (existingStatus !== 'granted') {
-    // Android remote notification permissions are granted during the app
-    // install, so this will only ask on iOS
-    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    finalStatus = status;
-  }
-
-  // Stop here if the user did not grant permissions
-  if (finalStatus !== 'granted') {
-    return;
-  }
-
-  // Get the token that uniquely identifies this device
-  let token = await Notifications.getExpoPushTokenAsync();
-
-  // POST the token to your backend server from where you can retrieve it to send push notifications.
-  return fetch(PUSH_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      token: {
-        notification_token: token,
-      },
-      user: {
-        username: username,
-        password: password,
-        email: email,
-        name: name,
-      },
-    }),
-  }).then((response) => response.json())
-  .then((responseJson) => {
-    if(responseJson.response == 'user_successfully_created'){
-      alert('Usul')
-      // Alert.alert(
-      //   'Cadastro feito com sucesso!',
-      //   [
-      //     {text: 'OK', onPress: () => console.log('OK Pressed')},
-      //   ],
-      //   {cancelable: false},
-      // );
-    } else {
-      alert('kkk')
-    }
-  //     Alert.alert(
-  //       'Esse usuário já existe!',
-  //       [
-  //         {text: 'OK', onPress: () => console.log('OK Pressed')},
-  //       ],
-  //       {cancelable: false},
-  //     );
-  //   }
-  // })
-  // .catch((error) => {
-  //   console.error(error);
-  });
-}
 
 const styles = StyleSheet.create({
   title: {
@@ -106,6 +38,73 @@ class CreateAccountScreen extends React.Component {
         password: '',
         passwordError: ""
     }
+  }
+
+  async registerForPushNotificationsAsync(name, password, username, email) {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+  
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+  
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+      return;
+    }
+  
+    // Get the token that uniquely identifies this device
+    let token = await Notifications.getExpoPushTokenAsync();
+
+    const { navigate } = this.props.navigation;
+  
+    // POST the token to your backend server from where you can retrieve it to send push notifications.
+    return fetch(PUSH_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token: {
+          notification_token: token,
+        },
+        user: {
+          username: username,
+          password: password,
+          email: email,
+          name: name,
+        },
+      }),
+    }).then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson.response == 'user_successfully_created'){
+        Alert.alert(
+          'Cadastro feito com sucesso!',
+          'Agora é só fazer o login.',
+          [
+            {text: 'OK', onPress: () => navigate(screens.LOGIN)},
+          ],
+          {cancelable: false},
+        );
+      } else {
+        Alert.alert(
+          'O usuário já existe!',
+          'Escolha outro usuário e tente novamente',
+          [
+            {text: 'OK'},
+          ],
+          {cancelable: false},
+        );
+      }
+    });
   }
   __changeUsernameInput(username) {
     this.setState(usernameValidator(username));
@@ -212,7 +211,7 @@ class CreateAccountScreen extends React.Component {
               />
           </Form>
           <Button rounded block style={btnStyle}
-            onPress={() => registerForPushNotificationsAsync(this.state.name, this.state.password, this.state.username, this.state.email)}
+            onPress={() => this.registerForPushNotificationsAsync(this.state.name, this.state.password, this.state.username, this.state.email)}
           >
               <Text>Cadastrar</Text>
           </Button>
