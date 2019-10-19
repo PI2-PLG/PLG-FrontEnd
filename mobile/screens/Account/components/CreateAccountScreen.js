@@ -143,20 +143,8 @@ class CreateAccountScreen extends React.Component {
     this.setState({ name })
   }
 
-  validate = (text) => {
-    console.log(text);
-    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-    if(reg.test(text) === false){
-    this.setState({email:text})
-    console(email)
-    return false;
-    }
-    else {
-      this.setState({email:text})
-    }
-  }
   render() {
-    const { navigate, goBack } = this.props.navigation;
+    const { navigate } = this.props.navigation;
 
 
     isDisabled = (

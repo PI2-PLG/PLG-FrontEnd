@@ -1,11 +1,15 @@
 import React from 'react';
 import { Container, Card, Content, Form, Item, Input, CardItem, Button, H1, View, Text, Icon} from 'native-base';
+import { usernameValidator, passwordValidator} from '../../../screens/Account/validations'
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
+import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Dimensions } from "react-native";
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
+
+const PUSH_ENDPOINT = 'http://192.168.15.6:8000/login/';
 
 const styles = StyleSheet.create({
     container: {
@@ -30,8 +34,67 @@ const styles = StyleSheet.create({
   });
 
 class LoginScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.props = props;
+    
+        this.state = {
+            username: '',
+            usernameError: "",
+            password: '',
+            passwordError: "",
+            isLoading: true
+        }
+    }
+
+    __submit(username, password){
+        return fetch(PUSH_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user: {
+                  username: username,
+                  password: password,
+                },
+              }),
+        }).then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson)
+            this.setState({
+              isLoading: false,
+              dataSource: responseJson.response,
+            });
+    
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+    }
+    
+    __changeUsernameInput(username) {
+        this.setState(usernameValidator(username));
+        this.setState({ username });
+    }
+    
+    __changePasswordInput(password) {
+        this.setState(passwordValidator(password));
+        this.setState({ password })
+    }
     render() {
         const { navigate } = this.props.navigation;
+        
+
+        isDisabled = (
+            (this.state.username && !this.state.usernameError) &&
+            (this.state.password && !this.state.passwordError) ? false : true
+          );
+      
+          btnStyle = !isDisabled ? {backgroundColor: '#DD6E42'} : {backgroundColor: '#E8E8E8'};
 
         return (
         <ImageBackground source={require('../../../assets/images/forest.jpg')} style={{ flex: 1, height: null, width: null, resizeMode: 'cover' }}>
@@ -62,32 +125,28 @@ class LoginScreen extends React.Component {
                                 <CardItem>
                                 <Content>
                                 <Form style={{paddingBottom: 25, paddingTop: 20, }}>
-                                    <Item>
-                                    <Input 
-                                        placeholder="Usuário" 
-                                        placeholderTextColor="#BDBDBD"
+                                    <InputField
+                                            value={this.state.username}
+                                            onChangeFunction={(value) => this.__changeUsernameInput(value)}
+                                            error={this.state.usernameError}
+                                            iconName='account-card-details'
+                                            iconType='MaterialCommunityIcons'
+                                            placeholder='Usuário'
+                                            secure={false}
                                     />
-                                    <Icon 
-                                        name='account' 
-                                        type="MaterialCommunityIcons" 
-                                        style={{color: '#1E3F20'}} 
+                                    <InputField
+                                        value={this.state.password}
+                                        onChangeFunction={(value) => this.__changePasswordInput(value)}
+                                        error={this.state.passwordError}
+                                        placeholder='Senha'
+                                        iconName='eye-off'
+                                        iconType='MaterialCommunityIcons'
+                                        secure={true}
                                     />
-                                    </Item>
-                                    <Item last>
-                                    <Input 
-                                        placeholder="Senha" 
-                                        placeholderTextColor="#BDBDBD"
-                                        inputBorderColor="#1C5B2F"   
-                                        secureTextEntry={true}                          
-                                    />
-                                    <Icon 
-                                        name='eye-off' 
-                                        type="MaterialCommunityIcons" 
-                                        style={{color: '#1E3F20'}} 
-                                    />
-                                    </Item>
                                 </Form>
-                                <Button rounded block style={styles.button}>
+                                <Button rounded block style={btnStyle}
+                                    onPress = {() => this.__submit(this.state.username, this.state.password)}
+                                >
                                     <Text>Entrar</Text>
                                 </Button>
                                 <Text
