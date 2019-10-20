@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
+import { Provider } from 'react-redux';
+import store from './store'
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import AppContainer from './navigation';
@@ -32,7 +33,9 @@ export default class App extends React.Component {
       }
   
       return (
-        <AppContainer /> 
+        <Provider store={store}>
+          <AppContainer /> 
+        </Provider>
       );
     }
   }
