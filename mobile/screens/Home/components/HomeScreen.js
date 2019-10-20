@@ -12,7 +12,7 @@ class HomeScreen extends React.Component {
     return (
       <Container style={{ backgroundColor: '#FFF' }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text> {username} </Text>
+          <Text> Olá {username} </Text>
           <Text>Home Screen</Text>
         </View>
         <FooterBar screen={tabScreens.home} />

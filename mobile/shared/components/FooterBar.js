@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
     },
     text: { fontSize: 10 },
     activedButton: { backgroundColor: '#FFF' },
-    actived: { color: 'red' },
+    actived: { color: '#DD6E42' },
     disabled: { color: "#D3D3D3" }
 });

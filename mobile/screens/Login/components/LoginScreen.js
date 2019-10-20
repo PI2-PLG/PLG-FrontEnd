@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Card, Content, Form, Item, Input, CardItem, Button, H1, View, Text, Icon} from 'native-base';
 import { usernameValidator, passwordValidator} from '../../../screens/Account/validations'
+import { login, getCurrentUser } from '../action';
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
 import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -50,6 +51,7 @@ class LoginScreen extends React.Component {
     }
 
     __submit(username, password){
+        const { dispatch } = this.props;
         return fetch(PUSH_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -62,13 +64,11 @@ class LoginScreen extends React.Component {
                   password: password,
                 },
               }),
-        }).then((response) => response.json())
+        } ).then((response) => response.json())
           .then((responseJson) => {
-                this.setState({
-                isLoading: false,
-                });
-                console.log(responseJson.response)
-              if(responseJson.response == 'successfully_login'){
+            dispatch(login());
+            if(responseJson.response == 'successfully_login'){
+                dispatch(getCurrentUser(responseJson));
                 this.props.navigation.navigate(screens.HOME);
               }
    
@@ -189,8 +189,9 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const { login } = state;
-    return { login: login }
+    return { 
+        username: state.username 
+    }
 }
 
 export default connect(mapStateToProps)(LoginScreen);
