@@ -8,7 +8,6 @@ import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 class HomeScreen extends React.Component {
   render() {
     const { username, name, email } = this.props;
-    console.log(this.props)
     return (
       <Container style={{ backgroundColor: '#FFF' }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
