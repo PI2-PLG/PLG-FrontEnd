@@ -190,7 +190,9 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = state => {
     return { 
-        username: state.username 
+        username: state.username,
+        email: state.email,
+        name: state.name 
     }
 }
 

@@ -7,13 +7,12 @@ import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 
 class HomeScreen extends React.Component {
   render() {
-    const { username } = this.props;
+    const { username, name, email } = this.props;
     console.log(this.props)
     return (
       <Container style={{ backgroundColor: '#FFF' }}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text> Olá {username} </Text>
-          <Text>Home Screen</Text>
+          <Text> Olá {name} </Text>
         </View>
         <FooterBar screen={tabScreens.home} />
       </Container>
@@ -23,12 +22,13 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => {
   const { login } = state;
-  const { username, email } = login.currentUser;
+  const { username, email, name } = login.currentUser;
 
   return {
       isAuthenticated: login.isAuthenticated,
       username: username,
-      email: email
+      email: email,
+      name: name,
   }
 }
 
