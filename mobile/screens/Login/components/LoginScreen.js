@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Container, Card, Content, Form, Item, Input, CardItem, Button, H1, View, Text, Icon} from 'native-base';
 import { usernameValidator, passwordValidator} from '../../../screens/Account/validations'
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
@@ -6,10 +7,7 @@ import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Dimensions } from "react-native";
 
-var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
-
-const PUSH_ENDPOINT = 'http://192.168.15.6:8000/login/';
+const PUSH_ENDPOINT = 'http://192.168.15.9:8000/login/';
 
 const styles = StyleSheet.create({
     container: {
@@ -37,6 +35,8 @@ class LoginScreen extends React.Component {
 
     constructor(props) {
         super(props);
+
+        console.log(this.props)
     
         this.props = props;
     
@@ -64,12 +64,14 @@ class LoginScreen extends React.Component {
               }),
         }).then((response) => response.json())
           .then((responseJson) => {
-            console.log(responseJson)
-            this.setState({
-              isLoading: false,
-              dataSource: responseJson.response,
-            });
-    
+                this.setState({
+                isLoading: false,
+                });
+                console.log(responseJson.response)
+              if(responseJson.response == 'successfully_login'){
+                this.props.navigation.navigate(screens.HOME);
+              }
+   
           })
           .catch((error) =>{
             console.error(error);
@@ -186,4 +188,9 @@ class LoginScreen extends React.Component {
     }
 }
 
-export default LoginScreen;
+const mapStateToProps = state => {
+    const { login } = state;
+    return { login: login }
+}
+
+export default connect(mapStateToProps)(LoginScreen);
