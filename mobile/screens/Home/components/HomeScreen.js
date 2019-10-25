@@ -23,6 +23,7 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
+      <Container>
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
@@ -30,6 +31,9 @@ class HomeScreen extends React.Component {
           onRegionChange={this._handleMapRegionChange}
           camera={this.state.camera}/>
       </View>
+      <FooterBar screen={tabScreens.home} />
+      </Container>
+
     );
   }
 }
