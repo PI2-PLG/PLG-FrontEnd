@@ -83,7 +83,7 @@ const switchStacks = createSwitchNavigator(
         CreateAccountScreen: AccountStack,
     },
     {
-        initialRouteName: 'LoginScreen',
+        initialRouteName: 'GraphicsScreen',
         defaultNavigationOptions: {
             header: null,
             gesturesEnabled: false
