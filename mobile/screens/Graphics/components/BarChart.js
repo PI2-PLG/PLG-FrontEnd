@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Content, Card, CardItem, Body, Text } from 'native-base';
+import { Content, Card, CardItem, Text } from 'native-base';
 import { VictoryBar, VictoryChart, VictoryAxis } from "victory-native";
 
 export default class BarChart extends React.Component {

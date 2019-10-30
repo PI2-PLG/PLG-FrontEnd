@@ -1,23 +1,35 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { VictoryBar, VictoryChart, VictoryTheme, VictoryPie, VictoryLine } from "victory-native";
+import { VictoryTheme } from "victory-native";
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
-import {
-  LineChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
-import BarChart from './BarChart'
-import { Container, Header, Left, Segment, Button, Body, Text } from "native-base";
+import BarChart from './BarChart';
+import BezierLineChart from './LineChart';
+import { Container, Segment, Button, Text } from "native-base";
 
 const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 }
+  { quarter: 1, earnings: Math.random() * 100 },
+  { quarter: 2, earnings: Math.random() * 100 },
+  { quarter: 3, earnings: Math.random() * 100 },
+  { quarter: 4, earnings: Math.random() * 100 }
 ];
+
+const line_data = {
+
+  labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+  datasets: [
+    {
+      data: [
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100,
+        Math.random() * 100
+      ]
+    }
+  ]
+}
+
 
 export default class GraphicsScren extends React.Component {
 
@@ -93,49 +105,12 @@ export default class GraphicsScren extends React.Component {
                 title = 'Umidade x Dias'
               >
               </BarChart>
-              
-              <LineChart
-                data={{
-                  labels: ["January", "February", "March", "April", "May", "June"],
-                  datasets: [
-                    {
-                      data: [
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100
-                      ]
-                    }
-                  ]
-                }}
-                width={310} // from react-native
+              <BezierLineChart
+                data={line_data}
+                width={300}
                 height={220}
-                yAxisLabel={"$"}
-                yAxisSuffix={"k"}
-                chartConfig={{
-                  backgroundColor: "#e26a00",
-                  backgroundGradientFrom: "#fb8c00",
-                  backgroundGradientTo: "#ffa726",
-                  decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 16
-                  },
-                  propsForDots: {
-                    r: "6",
-                    strokeWidth: "2",
-                    stroke: "#ffa726"
-                  }
-                }}
-                bezier
-                style={{
-                  marginVertical: 8,
-                  borderRadius: 16
-                }}
-              />
+                title='Teste'
+              />          
             </View>
           </ScrollView>
           ): (
