@@ -1,4 +1,4 @@
-import { LineChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import React from "react";
 import { Content, Card, CardItem, Text } from 'native-base';
 import 'babel-polyfill'
@@ -7,15 +7,9 @@ const chartConfig = {
     backgroundColor: '#FFF',
     backgroundGradientFrom: '#FFF',
     backgroundGradientTo: '#FFF',
-    color: (opacity = 1) => `rgba(169, 238, 194, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 4, 12, ${opacity})`,
+    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     style: {
-        borderRadius: 16
-    },
-    propsForDots: {
-        r: "5",
-        strokeWidth: "2",
-        stroke: "#a9eec2"
+    borderRadius: 16
     }
 }
 
@@ -24,7 +18,7 @@ const graphStyle = {
     ...chartConfig.style
 }
 
-export default class BezierLineChart extends React.Component {
+export default class ChartPie extends React.Component {
     render() {
         const { data, width, height, title } = this.props;
         return (
@@ -33,16 +27,18 @@ export default class BezierLineChart extends React.Component {
                   <CardItem header style={{ alignSelf: "center", borderRadius: 20}}>
                     <Text style={{color: '#525252'}}>{title}</Text>
                   </CardItem>
-                <CardItem style={{borderRadius: 20}}>
-                        <LineChart
-                        data={data}
-                        width={width}
-                        height={height}
-                        chartConfig={chartConfig}
-                        bezier
-                        style={graphStyle}
-                    />
-                </CardItem>
+                    <CardItem style={{borderRadius: 20}}>
+                        <PieChart
+                            data={data}
+                            height={height}
+                            width={width}
+                            chartConfig={chartConfig}
+                            accessor="population"
+                            style={graphStyle}
+                            backgroundColor="transparent"
+                            paddingLeft="15"
+                        />
+                    </CardItem>
               </Card>
             </Content>
         );

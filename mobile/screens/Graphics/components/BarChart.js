@@ -20,8 +20,8 @@ export default class BarChart extends React.Component {
                             y={y}
                             style={{ 
                                 data:{ 
-                                    fill: '#F2CABA',
-                                    stroke: '#F2CABA',
+                                    fill: '#fad284',
+                                    stroke: '#fad284',
                                     fillOpacity: 0.7,
                                     strokeWidth: 3
                                 },

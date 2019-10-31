@@ -4,7 +4,14 @@ import { VictoryTheme } from "victory-native";
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import BarChart from './BarChart';
 import BezierLineChart from './LineChart';
+import ChartPie from './PieChart';
+import StackChart from './StackChart'
 import { Container, Segment, Button, Text } from "native-base";
+
+const stack_data1 = [{ x: 'A', y: 3 }, { x: 'B', y: 4 }, { x: 'C', y: 9 }]
+const stack_data2 = [{ x: 'A', y: 1 }, { x: 'B', y: 2 }, { x: 'C', y: 5 }]
+const stack_data3 = [{ x: 'A', y: 2 }, { x: 'B', y: 1 }, { x: 'C', y: 7 }]
+
 
 const data = [
   { quarter: 1, earnings: Math.random() * 100 },
@@ -13,6 +20,13 @@ const data = [
   { quarter: 4, earnings: Math.random() * 100 }
 ];
 
+const pieChartData = [
+  { name: 'Seoul', population: 21500000, color: '#a9eec2', legendFontColor: '#7F7F7F', legendFontSize: 10 },
+  { name: 'Toronto', population: 2800000, color: '#fad284', legendFontColor: '#7F7F7F', legendFontSize: 10 },
+  { name: 'Beijing', population: 527612, color: '#f38181', legendFontColor: '#7F7F7F', legendFontSize: 10 },
+  { name: 'New York', population: 8538000, color: '#705772', legendFontColor: '#7F7F7F', legendFontSize: 10 },
+  { name: 'Moscow', population: 11920000, color: '#64ccda', legendFontColor: '#7F7F7F', legendFontSize: 10 }
+]
 const line_data = {
 
   labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
@@ -96,15 +110,21 @@ export default class GraphicsScren extends React.Component {
                 title = 'Temperatura x Dias'
               >
               </BarChart>
-              <BarChart
-                data={data}
+              <ChartPie
+                data={pieChartData}
                 width={300}
-                x='quarter'
-                y = 'earnings'
+                height={200}
+                title='Teste'
+              />   
+              <StackChart 
+                width={300}
+                height={250}
                 theme={VictoryTheme.material}
-                title = 'Umidade x Dias'
-              >
-              </BarChart>
+                title='Mais um Teste'
+                data1 = {stack_data1}
+                data2 = {stack_data2}
+                data3 = {stack_data3}
+              />
               <BezierLineChart
                 data={line_data}
                 width={300}
