@@ -7,6 +7,7 @@ import BezierLineChart from './LineChart';
 import ChartPie from './PieChart';
 import StackChart from './StackChart'
 import { Container, Segment, Button, Text } from "native-base";
+import { BackHandler } from 'react-native';
 
 const stack_data1 = [{ x: 'A', y: 3 }, { x: 'B', y: 4 }, { x: 'C', y: 9 }]
 const stack_data2 = [{ x: 'A', y: 1 }, { x: 'B', y: 2 }, { x: 'C', y: 5 }]
@@ -50,11 +51,30 @@ export default class GraphicsScren extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
     this.props = props;
 
     this.state = {
         seg: 1,
     }
+  }
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.HOME);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
   }
   render() {
     const data = [
