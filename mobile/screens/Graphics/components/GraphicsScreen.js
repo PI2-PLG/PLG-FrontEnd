@@ -116,7 +116,7 @@ export default class GraphicsScren extends React.Component {
           <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <ActivityIndicator/>
           </View>
-          <FooterBar screen={tabScreens.notifications} />
+          <FooterBar screen={tabScreens.graphics} />
         </Container>
       )
     }

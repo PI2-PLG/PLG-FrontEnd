@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Container } from 'native-base';
+import { View, Text, Container, Content } from 'native-base';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import NotificationCard from './NotificationCard';
-import { StyleSheet, Alert, BackHandler, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, BackHandler, ActivityIndicator } from 'react-native';
 
 
 const styles = StyleSheet.create({
@@ -54,14 +54,21 @@ class NotificationFeed extends React.Component {
       )
     }
     return (
-      <Container style={{ backgroundColor: '#FFF', paddingTop: 25, justifyContent: 'center', alignItems: 'center' }}>
-        <View>
-          <Text style={styles.title}>Notificações</Text>
+      <Container>
+      <ScrollView>
+        <View style={{ backgroundColor: '#FFF', paddingTop: 25, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+          <View>
+            <Text style={styles.title}>Notificações</Text>
+          </View>
+          <NotificationCard
+            dataSource={this.state.dataSource}
+          />
+          <NotificationCard
+            dataSource={this.state.dataSource}
+          />
         </View>
-        <NotificationCard
-          dataSource={this.state.dataSource}
-        />
-        <FooterBar screen={tabScreens.notifications} />
+      </ScrollView>
+      <FooterBar screen={tabScreens.notifications} />
       </Container>
     );
   }
