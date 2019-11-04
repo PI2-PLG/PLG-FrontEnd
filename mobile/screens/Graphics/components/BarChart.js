@@ -1,9 +1,30 @@
 import React from "react";
-import { Content, Card, CardItem, Text } from 'native-base';
+import { Content, Card, CardItem, Text, View } from 'native-base';
 import { VictoryBar, VictoryChart, VictoryAxis } from "victory-native";
+import { ActivityIndicator } from 'react-native';
 
 export default class BarChart extends React.Component {
+    constructor(props) {
+        super(props);
+   
+        this.state = {
+            isLoading: true
+        }
+    }
+    componentDidMount(){
+        this.setState({
+          isLoading: false,
+        })
+    }
     render(){
+
+        if(this.state.isLoading){
+            return(
+              <View style={{flex: 1, padding: 20}}>
+                <ActivityIndicator/>
+              </View>
+            )
+          }      
         const { data, width, x, y, theme, title} = this.props;
         return(
             <Content>

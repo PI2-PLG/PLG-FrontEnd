@@ -7,7 +7,7 @@ import BezierLineChart from './LineChart';
 import ChartPie from './PieChart';
 import StackChart from './StackChart'
 import { Container, Segment, Button, Text } from "native-base";
-import { BackHandler } from 'react-native';
+import { BackHandler, ActivityIndicator } from 'react-native';
 
 const stack_data1 = [{ x: 'A', y: 3 }, { x: 'B', y: 4 }, { x: 'C', y: 9 }]
 const stack_data2 = [{ x: 'A', y: 1 }, { x: 'B', y: 2 }, { x: 'C', y: 5 }]
@@ -57,7 +57,25 @@ export default class GraphicsScren extends React.Component {
 
     this.state = {
         seg: 1,
+        isLoading: true
     }
+  }
+  componentDidMount(){
+    return fetch('https://jsonplaceholder.typicode.com/comments')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
   }
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -91,6 +109,14 @@ export default class GraphicsScren extends React.Component {
       { quarter: 'qui', earnings: 25 },
       { quarter: 'sex', earnings: 30 }
     ];
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
 
     return (
       <Container>
