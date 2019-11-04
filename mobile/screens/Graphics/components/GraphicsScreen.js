@@ -112,9 +112,12 @@ export default class GraphicsScren extends React.Component {
 
     if(this.state.isLoading){
       return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
+        <Container>
+          <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator/>
+          </View>
+          <FooterBar screen={tabScreens.notifications} />
+        </Container>
       )
     }
 

@@ -3,46 +3,15 @@ import { Container, Content, Card, CardItem, Body, Header, Left, Button, Icon, R
 import { FlatList, ActivityIndicator, Text, View  } from 'react-native';
 
 
-export default class NotificationCard extends React.Component {
-    constructor(props){
-        super(props);
-        this.state ={ isLoading: true}
-      }
-    
-      componentDidMount(){
-        return fetch('https://facebook.github.io/react-native/movies.json')
-          .then((response) => response.json())
-          .then((responseJson) => {
-    
-            this.setState({
-              isLoading: false,
-              dataSource: responseJson.movies,
-            }, function(){
-    
-            });
-    
-          })
-          .catch((error) =>{
-            console.error(error);
-          });
-      }
-    
-    
-    
+export default class NotificationCard extends React.Component {   
       render(){
     
-        if(this.state.isLoading){
-          return(
-            <View style={{flex: 1, padding: 20}}>
-              <ActivityIndicator/>
-            </View>
-          )
-        }
-    
+        const { dataSource } = this.props;
+
         return(
           <View style={{flex: 1, paddingTop:20}}>
             <FlatList
-              data={this.state.dataSource}
+              data={dataSource}
               renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
               keyExtractor={({id}, index) => id}
             />
