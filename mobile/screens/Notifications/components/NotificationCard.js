@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#575757',
     fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
 
@@ -53,7 +54,7 @@ export default class NotificationCard extends React.Component {
     render(){
         const { type, message, temperature, humidity, date, hour } = this.props;
 
-        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+        const B = (props) => <Text style={{fontWeight: 'bold', color: 'black'}}>{props.children}</Text>
 
         let image;
 
@@ -67,10 +68,10 @@ export default class NotificationCard extends React.Component {
                     </Left>
                     <Body>
                     <Text style={styles.titleNotificatoin}>{ message }</Text>
-                    <Text>
+                    <Text style={{alignSelf: 'center', color: '#f77754', fontWeight: 'bold'}}>
                       Temperatura: <B>{ temperature }</B>
                     </Text>
-                    <Text>Umidade: <B>{ humidity }</B></Text>
+                    <Text style={{alignSelf: 'center', color: '#49beb7', fontWeight: 'bold'}}>Umidade: <B>{ humidity }</B></Text>
                     </Body>
                 </CardItem>
         } else {
