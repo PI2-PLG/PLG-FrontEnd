@@ -83,7 +83,7 @@ const switchStacks = createSwitchNavigator(
         CreateAccountScreen: AccountStack,
     },
     {
-        initialRouteName: 'LoginScreen',
+        initialRouteName: 'NotificationFeed',
         defaultNavigationOptions: {
             header: null,
             gesturesEnabled: false
