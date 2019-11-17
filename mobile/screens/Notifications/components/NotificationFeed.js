@@ -46,8 +46,27 @@ const styles = StyleSheet.create({
 class NotificationFeed extends React.Component {
   constructor(props){
     super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.state ={ isLoading: true}
   }
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.HOME);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
+  }
+  
   componentDidMount(){
     return fetch('https://facebook.github.io/react-native/movies.json')
       .then((response) => response.json())
