@@ -9,9 +9,62 @@ import StackChart from './StackChart'
 import { Container, Segment, Button, Text } from "native-base";
 import { BackHandler, ActivityIndicator } from 'react-native';
 
-const stack_data1 = [{ x: 'A', y: 3 }, { x: 'B', y: 4 }, { x: 'C', y: 9 }]
-const stack_data2 = [{ x: 'A', y: 1 }, { x: 'B', y: 2 }, { x: 'C', y: 5 }]
-const stack_data3 = [{ x: 'A', y: 2 }, { x: 'B', y: 1 }, { x: 'C', y: 7 }]
+
+const graphics = [
+  {
+    "type": 'stack_chart',
+    "title": 'Módulos',
+    "data": [
+      [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }],
+      [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }],
+      [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
+    ]
+  },
+  {
+    "type": "pie_chart",
+    "title": "Módulo 1 - Dados",
+    "data": [
+      { "name": 'Humidade', "value": 40, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Temperatura', "value": 28, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Co2', "value": 55, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+    ]
+  },
+  {
+    "type": "line_chart",
+    "title": "Temperatura x Meses",
+    "data": {
+
+      "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+      "datasets": [
+        {
+          "data": [
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100,
+            Math.random() * 100
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "bar_chart",
+    "title": "Humidade x Dias",
+    "data": [
+      { "quarter": 'seg', "earnings": 26 },
+      { "quarter": 'ter', "earnings": 25 },
+      { "quarter": 'qua', "earnings": 28 },
+      { "quarter": 'qui', "earnings": 25 },
+      { "quarter": 'sex', "earnings": 30 }
+    ]
+  }
+]
+
+const stack_data1 = [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }]
+const stack_data2 = [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }]
+const stack_data3 = [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
 
 
 const data = [
@@ -22,18 +75,18 @@ const data = [
 ];
 
 const pieChartData = [
-  { name: 'Seoul', population: 21500000, color: '#a9eec2', legendFontColor: '#7F7F7F', legendFontSize: 10 },
-  { name: 'Toronto', population: 2800000, color: '#fad284', legendFontColor: '#7F7F7F', legendFontSize: 10 },
-  { name: 'Beijing', population: 527612, color: '#f38181', legendFontColor: '#7F7F7F', legendFontSize: 10 },
-  { name: 'New York', population: 8538000, color: '#705772', legendFontColor: '#7F7F7F', legendFontSize: 10 },
-  { name: 'Moscow', population: 11920000, color: '#64ccda', legendFontColor: '#7F7F7F', legendFontSize: 10 }
+  { "name": 'Seoul', "population": 21500000, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+  { "name": 'Toronto', "population": 2800000, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+  { "name": 'Beijing', "population": 527612, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+  { "name": 'New York', "population": 8538000, "color": '#705772', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+  { "name": 'Moscow', "population": 11920000, "color": '#64ccda', "legendFontColor": '#7F7F7F', "legendFontSize": 10 }
 ]
 const line_data = {
 
-  labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-  datasets: [
+  "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+  "datasets": [
     {
-      data: [
+      "data": [
         Math.random() * 100,
         Math.random() * 100,
         Math.random() * 100,
@@ -96,20 +149,12 @@ export default class GraphicsScren extends React.Component {
   }
   render() {
     const data = [
-      { quarter: 'seg', earnings: 26 },
-      { quarter: 'ter', earnings: 25 },
-      { quarter: 'qua', earnings: 28 },
-      { quarter: 'qui', earnings: 25 },
-      { quarter: 'sex', earnings: 30 }
+      { "quarter": 'seg', "earnings": 26 },
+      { "quarter": 'ter', "earnings": 25 },
+      { "quarter": 'qua', "earnings": 28 },
+      { "quarter": 'qui', "earnings": 25 },
+      { "quarter": 'sex', "earnings": 30 }
     ];
-    const data2 = [
-      { quarter: 'seg', earnings: 26 },
-      { quarter: 'ter', earnings: 25 },
-      { quarter: 'quar', earnings: 28 },
-      { quarter: 'qui', earnings: 25 },
-      { quarter: 'sex', earnings: 30 }
-    ];
-
     if(this.state.isLoading){
       return(
         <Container>
