@@ -15,18 +15,18 @@ const graphics = [
     "type": 'stack_chart',
     "title": 'Módulos',
     "data": [
-      [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }],
-      [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }],
-      [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
+      [{ 'x': 'A', 'y': 54 }, { 'x': 'B', 'y': 39 }, { 'x': 'C', 'y': 40 }], // humidade
+      [{ 'x': 'A', 'y': 30 }, { 'x': 'B', 'y': 26 }, { 'x': 'C', 'y': 29 }], // temperatura
+      [{ 'x': 'A', 'y': 60 }, { 'x': 'B', 'y': 55 }, { 'x': 'C', 'y': 50 }], // co2
     ]
   },
   {
     "type": "pie_chart",
     "title": "Módulo 1 - Dados",
     "data": [
-      { "name": 'Humidade', "value": 40, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-      { "name": 'Temperatura', "value": 28, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-      { "name": 'Co2', "value": 55, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Humidade', "population": 52, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Temperatura', "population": 29, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Co2', "population": 55, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
     ]
   },
   {
@@ -59,20 +59,29 @@ const graphics = [
       { "quarter": 'qui', "earnings": 25 },
       { "quarter": 'sex', "earnings": 30 }
     ]
+  },
+  {
+    "type": 'stack_chart',
+    "title": 'Módulos',
+    "data": [
+      [{ 'x': 'A', 'y': 4 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 20 }],
+      [{ 'x': 'A', 'y': 6 }, { 'x': 'B', 'y': 8 }, { 'x': 'C', 'y': 15 }],
+      [{ 'x': 'A', 'y': 7 }, { 'x': 'B', 'y': 11 }, { 'x': 'C', 'y': 8 }]
+    ]
   }
 ]
 
-const stack_data1 = [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }]
-const stack_data2 = [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }]
-const stack_data3 = [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
+// const stack_data1 = [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }]
+// const stack_data2 = [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }]
+// const stack_data3 = [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
 
 
-const data = [
-  { quarter: 1, earnings: Math.random() * 100 },
-  { quarter: 2, earnings: Math.random() * 100 },
-  { quarter: 3, earnings: Math.random() * 100 },
-  { quarter: 4, earnings: Math.random() * 100 }
-];
+// const data = [
+//   { quarter: 1, earnings: Math.random() * 100 },
+//   { quarter: 2, earnings: Math.random() * 100 },
+//   { quarter: 3, earnings: Math.random() * 100 },
+//   { quarter: 4, earnings: Math.random() * 100 }
+// ];
 
 const pieChartData = [
   { "name": 'Seoul', "population": 21500000, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
@@ -81,22 +90,22 @@ const pieChartData = [
   { "name": 'New York', "population": 8538000, "color": '#705772', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
   { "name": 'Moscow', "population": 11920000, "color": '#64ccda', "legendFontColor": '#7F7F7F', "legendFontSize": 10 }
 ]
-const line_data = {
+// const line_data = {
 
-  "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-  "datasets": [
-    {
-      "data": [
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100,
-        Math.random() * 100
-      ]
-    }
-  ]
-}
+//   "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+//   "datasets": [
+//     {
+//       "data": [
+//         Math.random() * 100,
+//         Math.random() * 100,
+//         Math.random() * 100,
+//         Math.random() * 100,
+//         Math.random() * 100,
+//         Math.random() * 100
+//       ]
+//     }
+//   ]
+// }
 
 
 export default class GraphicsScren extends React.Component {
@@ -148,13 +157,39 @@ export default class GraphicsScren extends React.Component {
     return true;
   }
   render() {
-    const data = [
-      { "quarter": 'seg', "earnings": 26 },
-      { "quarter": 'ter', "earnings": 25 },
-      { "quarter": 'qua', "earnings": 28 },
-      { "quarter": 'qui', "earnings": 25 },
-      { "quarter": 'sex', "earnings": 30 }
-    ];
+    // const data = [
+    //   { "quarter": 'seg', "earnings": 26 },
+    //   { "quarter": 'ter', "earnings": 25 },
+    //   { "quarter": 'qua', "earnings": 28 },
+    //   { "quarter": 'qui', "earnings": 25 },
+    //   { "quarter": 'sex', "earnings": 30 }
+    // ];
+
+    chartList = graphics.map(function(chart, i) {
+
+      if(chart.type == 'pie_chart'){
+        return <ChartPie
+          key={i}
+          data={chart.data}
+          width={300}
+          height={200}
+          title={chart.title}
+        />       
+      }
+      else if (chart.type == 'stack_chart') {
+          return <StackChart 
+          key={i}
+          width={300}
+          theme={VictoryTheme.material}
+          title={chart.title}
+          data1 = {chart.data[0]}
+          data2 = {chart.data[1]}
+          data3 = {chart.data[2]}
+        /> 
+      }
+
+  }.bind(this));
+
     if(this.state.isLoading){
       return(
         <Container>
@@ -195,7 +230,8 @@ export default class GraphicsScren extends React.Component {
         { this.state.seg === 1 ?
           (<ScrollView>
             <View style={styles.container}>
-              <BarChart
+              {chartList}
+              {/* <BarChart
                 data={data}
                 width={300}
                 x='quarter'
@@ -204,12 +240,6 @@ export default class GraphicsScren extends React.Component {
                 title = 'Temperatura x Dias'
               >
               </BarChart>
-              <ChartPie
-                data={pieChartData}
-                width={300}
-                height={200}
-                title='Teste'
-              />   
               <StackChart 
                 width={300}
                 height={250}
@@ -218,13 +248,13 @@ export default class GraphicsScren extends React.Component {
                 data1 = {stack_data1}
                 data2 = {stack_data2}
                 data3 = {stack_data3}
-              />
-              <BezierLineChart
+              /> */}
+              {/* <BezierLineChart
                 data={line_data}
                 width={300}
                 height={220}
                 title='Teste'
-              />          
+              />           */}
             </View>
           </ScrollView>
           ): (
