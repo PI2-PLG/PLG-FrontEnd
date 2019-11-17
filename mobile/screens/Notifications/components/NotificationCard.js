@@ -59,38 +59,46 @@ export default class NotificationCard extends React.Component {
         let image;
 
         if (type == 'alert' ) {
-          image = <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
-                    <Left style={{flex:0.5}}>
-                      <Image
-                        style={{width: 60, height: 60}}
-                        source={require('./../../../assets/images/burning.png')}
-                      />
-                    </Left>
-                    <Body>
-                    <Text style={styles.titleNotificatoin}>{ message }</Text>
-                    <Text style={{alignSelf: 'center', color: '#f77754', fontWeight: 'bold'}}>
-                      Temperatura: <B>{ temperature }</B>
-                    </Text>
-                    <Text style={{alignSelf: 'center', color: '#49beb7', fontWeight: 'bold'}}>Umidade: <B>{ humidity }</B></Text>
-                    </Body>
-                </CardItem>
+          image = <Content>
+          <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+            <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
+              <Left style={{flex:0.5}}>
+                    <Image
+                      style={{width: 60, height: 60}}
+                      source={require('./../../../assets/images/burning.png')}
+                    />
+                  </Left>
+                  <Body>
+                  <Text style={styles.titleNotificatoin}>{ message }</Text>
+                  </Body>
+              </CardItem>
+              <CardItem footer bordered style={{borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+                <Body>
+                  <Text style={{alignSelf: 'center', color: '#f77754', fontWeight: 'bold'}}>
+                        Temperatura: <B>{ temperature }</B>
+                  </Text>
+                  <Text style={{alignSelf: 'center', color: '#49beb7', fontWeight: 'bold'}}>Umidade: <B>{ humidity }</B></Text>
+                </Body>
+                <Right>
+                  <Text style={styles.footerText}>{date} {hour}</Text>
+                </Right>
+            </CardItem>
+          </Card>
+        </Content>
         } else {
-          image = <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
-                    <Left style={{flex:0.5}}>
-                      <Image
-                        style={{width: 60, height: 60}}
-                        source={require('./../../../assets/images/switch-off.png')}
-                      />
-                    </Left>
-                    <Body>
-                    <Text style={styles.titleNotificatoin}>{ message }</Text>
-                    </Body>
-                </CardItem>
-        }
-        return(
-        <Content>
-            <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
-              { image }
+          image = <Content>
+          <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+            <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
+              <Left style={{flex:0.5}}>
+                    <Image
+                      style={{width: 60, height: 60}}
+                      source={require('./../../../assets/images/switch-off.png')}
+                    />
+                  </Left>
+                  <Body>
+                  <Text style={styles.titleNotificatoin}>{ message }</Text>
+                  </Body>
+              </CardItem>
               <CardItem footer bordered style={{borderRadius: 20, backgroundColor: '#f8f8f8'}}>
                 <Body>
                 </Body>
@@ -98,8 +106,13 @@ export default class NotificationCard extends React.Component {
                   <Text style={styles.footerText}>{date} {hour}</Text>
                 </Right>
             </CardItem>
-            </Card>
-          </Content>
+          </Card>
+        </Content>
+        }
+        return(
+        <Content>
+            { image }
+        </Content>
         );
     }
 }
