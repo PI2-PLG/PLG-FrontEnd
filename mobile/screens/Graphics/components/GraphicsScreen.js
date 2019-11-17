@@ -60,53 +60,7 @@ const graphics = [
       { "quarter": 'sex', "earnings": 30 }
     ]
   },
-  {
-    "type": 'stack_chart',
-    "title": 'Módulos',
-    "data": [
-      [{ 'x': 'A', 'y': 4 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 20 }],
-      [{ 'x': 'A', 'y': 6 }, { 'x': 'B', 'y': 8 }, { 'x': 'C', 'y': 15 }],
-      [{ 'x': 'A', 'y': 7 }, { 'x': 'B', 'y': 11 }, { 'x': 'C', 'y': 8 }]
-    ]
-  }
 ]
-
-// const stack_data1 = [{ 'x': 'A', 'y': 3 }, { 'x': 'B', 'y': 4 }, { 'x': 'C', 'y': 9 }]
-// const stack_data2 = [{ 'x': 'A', 'y': 1 }, { 'x': 'B', 'y': 2 }, { 'x': 'C', 'y': 5 }]
-// const stack_data3 = [{ 'x': 'A', 'y': 2 }, { 'x': 'B', 'y': 1 }, { 'x': 'C', 'y': 7 }]
-
-
-// const data = [
-//   { quarter: 1, earnings: Math.random() * 100 },
-//   { quarter: 2, earnings: Math.random() * 100 },
-//   { quarter: 3, earnings: Math.random() * 100 },
-//   { quarter: 4, earnings: Math.random() * 100 }
-// ];
-
-const pieChartData = [
-  { "name": 'Seoul', "population": 21500000, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-  { "name": 'Toronto', "population": 2800000, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-  { "name": 'Beijing', "population": 527612, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-  { "name": 'New York', "population": 8538000, "color": '#705772', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-  { "name": 'Moscow', "population": 11920000, "color": '#64ccda', "legendFontColor": '#7F7F7F', "legendFontSize": 10 }
-]
-// const line_data = {
-
-//   "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-//   "datasets": [
-//     {
-//       "data": [
-//         Math.random() * 100,
-//         Math.random() * 100,
-//         Math.random() * 100,
-//         Math.random() * 100,
-//         Math.random() * 100,
-//         Math.random() * 100
-//       ]
-//     }
-//   ]
-// }
-
 
 export default class GraphicsScren extends React.Component {
 
@@ -157,13 +111,6 @@ export default class GraphicsScren extends React.Component {
     return true;
   }
   render() {
-    // const data = [
-    //   { "quarter": 'seg', "earnings": 26 },
-    //   { "quarter": 'ter', "earnings": 25 },
-    //   { "quarter": 'qua', "earnings": 28 },
-    //   { "quarter": 'qui', "earnings": 25 },
-    //   { "quarter": 'sex', "earnings": 30 }
-    // ];
 
     chartList = graphics.map(function(chart, i) {
 
@@ -186,6 +133,15 @@ export default class GraphicsScren extends React.Component {
           data2 = {chart.data[1]}
           data3 = {chart.data[2]}
         /> 
+      }
+      else if (chart.type == 'line_chart') {
+        return <BezierLineChart
+        key={i}
+        data={chart.data}
+        width={300}
+        height={220}
+        title={chart.title}
+        />  
       }
 
   }.bind(this));
@@ -231,30 +187,6 @@ export default class GraphicsScren extends React.Component {
           (<ScrollView>
             <View style={styles.container}>
               {chartList}
-              {/* <BarChart
-                data={data}
-                width={300}
-                x='quarter'
-                y = 'earnings'
-                theme={VictoryTheme.material}
-                title = 'Temperatura x Dias'
-              >
-              </BarChart>
-              <StackChart 
-                width={300}
-                height={250}
-                theme={VictoryTheme.material}
-                title='Mais um Teste'
-                data1 = {stack_data1}
-                data2 = {stack_data2}
-                data3 = {stack_data3}
-              /> */}
-              {/* <BezierLineChart
-                data={line_data}
-                width={300}
-                height={220}
-                title='Teste'
-              />           */}
             </View>
           </ScrollView>
           ): (
