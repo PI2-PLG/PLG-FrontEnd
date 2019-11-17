@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     color: 'gray'
   },
   titleNotificatoin: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#575757',
     fontWeight: 'bold',
   }
@@ -51,41 +51,52 @@ export default class NotificationCard extends React.Component {
       })
     }   
     render(){
-      
+        const { type, message, temperature, humidity, date, hour } = this.props;
+
+        const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+
+        let image;
+
+        if (type == 'alert' ) {
+          image = <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
+                    <Left style={{flex:0.5}}>
+                      <Image
+                        style={{width: 60, height: 60}}
+                        source={require('./../../../assets/images/burning.png')}
+                      />
+                    </Left>
+                    <Body>
+                    <Text style={styles.titleNotificatoin}>{ message }</Text>
+                    <Text>
+                      Temperatura: <B>{ temperature }</B>
+                    </Text>
+                    <Text>Umidade: <B>{ humidity }</B></Text>
+                    </Body>
+                </CardItem>
+        } else {
+          image = <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
+                    <Left style={{flex:0.5}}>
+                      <Image
+                        style={{width: 60, height: 60}}
+                        source={require('./../../../assets/images/switch-off.png')}
+                      />
+                    </Left>
+                    <Body>
+                    <Text style={styles.titleNotificatoin}>{ message }</Text>
+                    </Body>
+                </CardItem>
+        }
         return(
         <Content>
             <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
-              <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
-                <Left style={{flex:0.5}}>
-                  <Image
-                      style={{width: 60, height: 60}}
-                      source={require('./../../../assets/images/burning.png')}
-                    />
-                </Left>
-                <Body>
-                <Text style={styles.titleNotificatoin}>Tá pegando fogo bixo!</Text>
-                <Text>
-                  Temperatura: 39º
-                </Text>
-                <Text>Umidade: 1%</Text>
-                </Body>
-              </CardItem>
+              { image }
               <CardItem footer bordered style={{borderRadius: 20, backgroundColor: '#f8f8f8'}}>
                 <Body>
-
                 </Body>
                 <Right>
-                  <Text style={styles.footerText}>04/11/2019 11:32</Text>
+                  <Text style={styles.footerText}>{date} {hour}</Text>
                 </Right>
             </CardItem>
-              {/* <CardItem style={{borderRadius: 20}}>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon type='MaterialCommunityIcons' name="alert" />
-                  <Text>1,926 stars</Text>
-                </Button>
-              </Left>
-            </CardItem> */}
             </Card>
           </Content>
         );
