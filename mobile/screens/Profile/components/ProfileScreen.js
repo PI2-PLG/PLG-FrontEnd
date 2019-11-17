@@ -1,121 +1,117 @@
-import React from 'react';
-import { View, Text, Container, Card, CardItem, Body, Content, Form, Button } from 'native-base';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import { logout } from '../../Login/action';
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity
+} from 'react-native';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
-import { Image, StyleSheet } from 'react-native'
-import { Col, Row, Grid } from "react-native-easy-grid";
-import InputField from '../../../shared/components/InputField'
+import { Container, View, Text, Content, Card, CardItem, Body, Button } from 'native-base';
+import { connect } from 'react-redux';
 
+
+class ProfileScreen extends Component {
+
+  constructor(props){
+    super(props);
+    
+    this.props = props;
+
+  }
+
+  __logout() {
+    const { dispatch } = this.props;
+    dispatch(logout());
+    this.props.navigation.navigate(screens.LOGIN);
+}
+
+  render() {
+    const B = (props) => <Text style={{fontWeight: 'bold', color: '#696969'}}>{props.children}</Text>
+    const { username, name, email } = this.props;
+    return (
+    <Container>
+      <View style={{flex: 1}}>
+          <View style={styles.header}></View>
+          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
+          <View style={styles.body}>
+            <View style={styles.bodyContent}>
+              <Text style={styles.name}>{name}</Text>
+              <Text style={styles.info}>{email}</Text>
+              <Text style={styles.description}><B>Usuário:</B>{username}</Text>
+              <Text style={styles.description}><B>Módulos cadastrados:</B> 3</Text>
+              <Button style={styles.buttonContainer}
+                onPress = {() => this.__logout()}
+              >
+                <Text>Sair</Text> 
+              </Button>
+            </View>
+        </View>
+      </View>
+      <FooterBar screen={tabScreens.profile} />
+      </Container>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-    titleNotificatoin: {
-      fontSize: 19,
-      color: '#575757',
-      fontWeight: 'bold',
-      textAlign: 'center',
-      paddingTop: 10,
-    },
-    border: {
-        borderTopColor: 'black',
-        borderTopWidth: 30,
-    },
-    leftContainer:{
-        flex:1,
-        backgroundColor: '#ca8afa',    
-    },
-    rightContainer:{
-        flex:1,
-        backgroundColor: '#96d0e3'
-  
-    }
-  });
+  header:{
+    backgroundColor: "#DD6E42",
+    height:200,
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:130
+  },
+  name:{
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  body:{
+    marginTop:40,
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: 'center',
+    padding:30,
+  },
+  name:{
+    fontSize:28,
+    color: "#696969",
+    fontWeight: "600"
+  },
+  info:{
+    fontSize:16,
+    color: "#DD6E42",
+    marginTop:10
+  },
+  description:{
+    fontSize:16,
+    color: "#696969",
+    marginTop:10,
+    textAlign: 'center'
+  },
+  buttonContainer: {
+    marginTop:60,
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "#DD6E42",
+  },
+});
 
-class ProfileScreen extends React.Component {
-    render() {
-      const { username, name, email } = this.props;
-      return (
-          <View style={{flex: 1}}>
-            <Grid style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Row size={50} style={{backgroundColor: '#f1d6ab', alignItems: 'center'}}>
-                    <Col>
-                        <Image
-                            style={{width: 90, height: 90, alignSelf: 'center'}}
-                            source={require('./../../../assets/images/user.png')}
-                        />
-                        <Text style={styles.titleNotificatoin}>Taynara Carvalho</Text>
-                    </Col>
-
-                </Row>
-                <Row size={50}>
-                <Content style={{margin: 10, paddingBottom: 50}}>
-                    <Card>
-                        <CardItem>
-                        <Content>
-                        <Form style={{paddingBottom: 25, paddingTop: 20, }}>
-                            <InputField
-
-                            />
-                            <InputField
-
-                            />
-                        </Form>
-                        <Button rounded block
-                        >
-                            <Text>Entrar</Text>
-                        </Button>
-                        <Text
-                            style={{
-                                fontWeight: 'bold', 
-                                color: '#BDBDBD',
-                                fontSize: 14,
-                                textDecorationLine: 'underline',
-                                textAlign: 'center',
-                                marginTop: 10
-                            }}
-                        >
-                            Esqueceu sua senha?
-                        </Text>
-                        </Content>
-
-                        </CardItem>
-                    </Card>
-                    <Text
-                    style={{
-                        fontWeight: 'bold', 
-                        alignSelf: 'center',
-                        color: '#FFF',
-                        textDecorationLine: 'underline',
-                        opacity: 0.8,
-                        marginTop: 30
-                    }}
-                    >Cadastre-se
-                </Text>
-                </Content>
-                </Row>
-            </Grid>
-            <FooterBar screen={tabScreens.profile} />
-          </View>
-        // <Container style={{ backgroundColor: '#FFF' }}>
-        //     <Content padder>
-        //     <Card transparent>
-        //         <CardItem>
-        //         <Body>
-        //         <Image
-        //             style={{width: 90, height: 90}}
-        //             source={require('./../../../assets/images/user.png')}
-        //         />
-        //         <Text style={styles.titleNotificatoin}>Taynara Carvalho</Text>
-        //         </Body>
-        //         </CardItem>
-        //     </Card>
-        //     </Content>
-        //   <FooterBar screen={tabScreens.profile} />
-        // </Container>
-      );
-    }
-  }
-  
-  const mapStateToProps = state => {
+const mapStateToProps = state => {
     const { login } = state;
     const { username, email, name } = login.currentUser;
   

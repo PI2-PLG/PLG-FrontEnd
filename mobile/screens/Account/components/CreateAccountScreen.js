@@ -7,7 +7,7 @@ import * as Permissions from 'expo-permissions';
 import { StyleSheet, Alert, BackHandler } from 'react-native';
 
 
-const PUSH_ENDPOINT = 'http://192.168.15.9:8000/new-user/';
+const PUSH_ENDPOINT = 'http://192.168.15.6:8000/new-user/';
 
 
 const styles = StyleSheet.create({
