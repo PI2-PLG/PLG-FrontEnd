@@ -6,6 +6,7 @@ import GraphicsScreen from '../screens/Graphics';
 import NotificationFeed from '../screens/Notifications';
 import LoginScreen from '../screens/Login';
 import CreateAccountScreen from '../screens/Account';
+import ProfileScreen from '../screens/Profile'
 
 
 const HomeStack = createStackNavigator(
@@ -74,6 +75,18 @@ const AccountStack = createStackNavigator(
     }
 );
 
+const ProfileStack = createStackNavigator(
+    {
+        Profile: ProfileScreen,
+    },
+    {
+        initialRouteName: 'Profile',
+        defaultNavigationOptions: {
+            header: null,
+            gesturesEnabled: false
+        }
+    }
+);
 const switchStacks = createSwitchNavigator(
     {
         HomeScreen: HomeStack,
@@ -81,9 +94,10 @@ const switchStacks = createSwitchNavigator(
         NotificationFeed: NotificationsStack,
         LoginScreen: LoginStack,
         CreateAccountScreen: AccountStack,
+        ProfileScreen: ProfileStack
     },
     {
-        initialRouteName: 'GraphicsScreen',
+        initialRouteName: 'HomeScreen',
         defaultNavigationOptions: {
             header: null,
             gesturesEnabled: false
