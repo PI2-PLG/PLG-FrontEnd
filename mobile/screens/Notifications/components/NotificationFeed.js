@@ -46,8 +46,27 @@ const styles = StyleSheet.create({
 class NotificationFeed extends React.Component {
   constructor(props){
     super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.state ={ isLoading: true}
   }
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.HOME);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
+  }
+  
   componentDidMount(){
     return fetch('https://facebook.github.io/react-native/movies.json')
       .then((response) => response.json())
@@ -70,7 +89,7 @@ class NotificationFeed extends React.Component {
     if(this.state.isLoading){
       return(
         <Container>
-          <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center'}}>
             <ActivityIndicator/>
           </View>
           <FooterBar screen={tabScreens.notifications} />
@@ -91,7 +110,7 @@ class NotificationFeed extends React.Component {
       />
     ));
     return (
-      <Container>
+      <Container >
       <ScrollView>
         <View style={{ backgroundColor: '#FFF', paddingTop: 25, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <View>

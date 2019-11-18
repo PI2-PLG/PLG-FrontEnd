@@ -28,20 +28,6 @@ export default class NotificationCard extends React.Component {
         selectedColor: '',
       };
     }
-      // render(){
-    
-      //   const { dataSource } = this.props;
-
-      //   return(
-      //     <View style={{flex: 1, paddingTop:20}}>
-      //       <FlatList
-      //         data={dataSource}
-      //         renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-      //         keyExtractor={({id}, index) => id}
-      //       />
-      //     </View>
-      //   );
-      // }
     componentDidMount() {
       this._getRandomColor()
     }
@@ -60,7 +46,7 @@ export default class NotificationCard extends React.Component {
 
         if (type == 'alert' ) {
           image = <Content>
-          <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+          <Card style={{ width: 350, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
             <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
               <Left style={{flex:0.5}}>
                     <Image
@@ -87,7 +73,7 @@ export default class NotificationCard extends React.Component {
         </Content>
         } else {
           image = <Content>
-          <Card style={{ width: 320, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+          <Card style={{ width: 350, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
             <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
               <Left style={{flex:0.5}}>
                     <Image

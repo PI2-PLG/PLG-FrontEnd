@@ -6,9 +6,9 @@ import { login, getCurrentUser } from '../action';
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
 import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Dimensions } from "react-native";
+import { Alert } from "react-native";
 
-const PUSH_ENDPOINT = 'http://192.168.15.9:8000/login/';
+const PUSH_ENDPOINT = 'http://192.168.15.6:8000/login/';
 
 const styles = StyleSheet.create({
     container: {
@@ -68,7 +68,34 @@ class LoginScreen extends React.Component {
             if(responseJson.response == 'successfully_login'){
                 dispatch(getCurrentUser(responseJson));
                 this.props.navigation.navigate(screens.HOME);
-              }
+            } else if(responseJson.response == 'accont_disabled') {
+                Alert.alert(
+                    'Sua conta não está ativa!',
+                    '',
+                    [
+                      {text: 'OK'},
+                    ],
+                    {cancelable: false},
+                  );
+            } else if(responseJson.response == 'invalid_login') {
+                Alert.alert(
+                    'Senha ou usuário errado!',
+                    '',
+                    [
+                      {text: 'OK'},
+                    ],
+                    {cancelable: false},
+                );
+            } else if(responseJson.response == 'unable_to_process') {
+                Alert.alert(
+                    'Não consiguimos processar deu login. Desculpe!',
+                    'Tente novamente mais tarde',
+                    [
+                      {text: 'OK'},
+                    ],
+                    {cancelable: false},
+                );
+            }
    
           })
           .catch((error) =>{
