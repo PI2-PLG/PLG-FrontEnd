@@ -240,8 +240,8 @@ class HomeScreen extends React.Component {
   state = {
     camera: {
       center:{
-        latitude: -15.98932261,
-        longitude: -48.04509044,
+        latitude: -15.9896383,
+        longitude: -48.0440679,
       },
       altitude: 1216,
       pitch: 3,
@@ -273,17 +273,6 @@ class HomeScreen extends React.Component {
           <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
           </Marker>
         ))}
-              {/* <Marker
-                coordinate={{
-                  latitude: -15.98932261,
-                  longitude: -48.04509044,
-                }}
-                title={'Modulo A'}
-                description={'Hey hey'}
-                >
-                <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
-                </Marker> */}
-
         </MapView>
       </View>
       <FooterBar screen={tabScreens.home} />
