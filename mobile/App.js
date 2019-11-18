@@ -1,8 +1,10 @@
 import React from 'react';
 import { AppLoading } from 'expo';
-import { Container, Text } from 'native-base';
+import { Provider } from 'react-redux';
+import store from './store'
 import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';import AppContainer from './navigation';
+import { Ionicons } from '@expo/vector-icons';
+import AppContainer from './navigation';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -14,8 +16,12 @@ export default class App extends React.Component {
   
     async componentDidMount() {
       await Font.loadAsync({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+        Entypo: require('./assets/fonts/Entypo.ttf'),
+        RubikBlack: require('./assets/fonts/Rubik-Black.ttf'),
+        EvilIcons: require('./assets/fonts/EvilIcons.ttf'),
+        AntDesign: require('./assets/fonts/AntDesign.ttf'),
+        Foundation: require('./assets/fonts/Foundation.ttf'),
+        Roboto_medium: require('./assets/fonts/Roboto_medium.ttf'),
         ...Ionicons.font,
       });
       this.setState({ isReady: true });
@@ -27,7 +33,9 @@ export default class App extends React.Component {
       }
   
       return (
-        <AppContainer /> 
+        <Provider store={store}>
+          <AppContainer /> 
+        </Provider>
       );
     }
   }
