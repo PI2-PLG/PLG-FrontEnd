@@ -6,6 +6,12 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import { StyleSheet, Dimensions, Image, StatusBar } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+
+const { width, height } = Dimensions.get("window");
+
+const CARD_HEIGHT = height / 4;
+const CARD_WIDTH = 50;
 
 var mapStyle =[
     {
@@ -375,7 +381,6 @@ class HomeScreen extends React.Component {
     },
   };
 
-
   render() {
     const { username, name, email } = this.props;
     return (
@@ -400,8 +405,29 @@ class HomeScreen extends React.Component {
           </Marker>
         ))}
         </MapView>
-        <View style={{backgroundColor: 'white', width: 30, height: 30}}>
-            <Text>Oi</Text>
+        <View style={styles.cardLegend}>
+            <Grid>
+                <Col>
+                    <Row>
+                        <Image source={require('../../../assets/images/location.png')} style={{ width: 25, height: 25 }} />
+                        <Text style={styles.textLegend}>Ativo</Text>
+                    </Row>
+                    <Row>
+                        <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 25, height: 25 }} />
+                        <Text style={styles.textLegend}>Inativo</Text>
+                    </Row>
+                </Col>
+                <Col>
+                    <Row>
+                        <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 25, height: 25 }} />
+                        <Text style={styles.textLegend}>Perigo</Text>
+                    </Row>
+                    <Row>
+                        <Image source={require('../../../assets/images/location1.png')} style={{ width: 25, height: 25 }} />
+                        <Text style={styles.textLegend}>Movimento</Text>
+                    </Row>
+                </Col>
+            </Grid>
         </View>
       </View>
       <FooterBar screen={tabScreens.home} />
@@ -422,6 +448,20 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  cardLegend:{
+    padding: 15,
+    backgroundColor: "#FFF",
+    marginHorizontal: 10,
+    height: 90,
+    width: 180,
+    position: 'absolute',
+    top: 40,
+    borderWidth: 1,
+    borderColor: '#d6d7da',
+  },
+  textLegend: {
+      fontSize: 10
+  }
 });
 
 const mapStateToProps = state => {
