@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
-import { StyleSheet, Dimensions, Image } from 'react-native';
+import { StyleSheet, Dimensions, Image, StatusBar } from 'react-native';
 
 var mapStyle =[
     {
@@ -380,6 +380,7 @@ class HomeScreen extends React.Component {
     const { username, name, email } = this.props;
     return (
       <Container>
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
       <View style={styles.container}>
         <MapView
           style={styles.mapStyle}
@@ -399,6 +400,9 @@ class HomeScreen extends React.Component {
           </Marker>
         ))}
         </MapView>
+        <View style={{backgroundColor: 'white', width: 30, height: 30}}>
+            <Text>Oi</Text>
+        </View>
       </View>
       <FooterBar screen={tabScreens.home} />
       </Container>

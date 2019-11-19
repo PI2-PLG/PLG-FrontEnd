@@ -4,7 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import NotificationCard from './NotificationCard';
-import { StyleSheet, ScrollView, BackHandler, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, StatusBar } from 'react-native';
 
 const notifications = [
   {
@@ -111,6 +111,7 @@ class NotificationFeed extends React.Component {
     ));
     return (
       <Container >
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
       <ScrollView>
         <View style={{ backgroundColor: '#FFF', paddingTop: 25, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <View>
