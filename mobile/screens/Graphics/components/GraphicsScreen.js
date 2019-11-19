@@ -7,7 +7,7 @@ import BezierLineChart from './LineChart';
 import ChartPie from './PieChart';
 import StackChart from './StackChart'
 import { Container, Segment, Button, Text } from "native-base";
-import { BackHandler, ActivityIndicator } from 'react-native';
+import { BackHandler, ActivityIndicator, StatusBar } from 'react-native';
 
 
 const graphics = [
@@ -159,6 +159,7 @@ export default class GraphicsScren extends React.Component {
 
     return (
       <Container>
+        <StatusBar backgroundColor="blue" barStyle="dark-content" />
         <Segment style={{marginTop: 30, backgroundColor: 'white'}}>
           <Button
             style={{

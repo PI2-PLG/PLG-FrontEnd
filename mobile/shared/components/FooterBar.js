@@ -57,7 +57,7 @@ class FooterBar extends Component{
                         active={graphics}
                         style={graphics ? styles.activedButton : null}
                         onPress={() => navigate(screens.GRAPHICS)}>
-                        <Icon active={graphics} name="ios-list-box" style={graphics ? styles.actived : styles.disabled} />
+                        <Icon active={graphics} type="MaterialCommunityIcons" name="chart-bar" style={graphics ? styles.actived : styles.disabled} />
                         <Text style={[styles.text, graphics ? styles.actived : styles.disabled]}>Gráficos</Text>
                     </Button>
                     <Button vertical
