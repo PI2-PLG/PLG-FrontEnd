@@ -8,11 +8,6 @@ import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import { StyleSheet, Dimensions, Image, StatusBar } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
-const { width, height } = Dimensions.get("window");
-
-const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = 50;
-
 var mapStyle =[
     {
         "featureType": "administrative.locality",
@@ -460,7 +455,7 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
   },
   textLegend: {
-      fontSize: 10
+    fontSize: 10
   }
 });
 

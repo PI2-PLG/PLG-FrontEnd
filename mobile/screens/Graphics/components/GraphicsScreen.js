@@ -6,8 +6,9 @@ import BarChart from './BarChart';
 import BezierLineChart from './LineChart';
 import ChartPie from './PieChart';
 import StackChart from './StackChart'
-import { Container, Segment, Button, Text } from "native-base";
-import { BackHandler, ActivityIndicator, StatusBar } from 'react-native';
+import { Container, Segment, Button, Text, Content, Picker } from "native-base";
+import { BackHandler, ActivityIndicator, StatusBar  } from 'react-native';
+
 
 
 const graphics = [
@@ -62,6 +63,8 @@ const graphics = [
   },
 ]
 
+const Item = Picker.Item;
+
 export default class GraphicsScren extends React.Component {
 
   constructor(props) {
@@ -73,8 +76,26 @@ export default class GraphicsScren extends React.Component {
 
     this.state = {
         seg: 1,
-        isLoading: true
+        isLoading: true,
+        selectedItem: undefined,
+        selected1: '',
+        results: {
+            items: []
+        }
     }
+  }
+  
+  onValueChange (value) {
+    this.setState({
+        selected1 : value,
+        isLoading: true
+    });
+
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+      });
+    }, 100);
   }
   componentDidMount(){
     return fetch('https://jsonplaceholder.typicode.com/comments')
@@ -146,21 +167,104 @@ export default class GraphicsScren extends React.Component {
 
   }.bind(this));
 
-    if(this.state.isLoading){
-      return(
-        <Container>
-          <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <ActivityIndicator/>
+    // if(this.state.isLoading){
+    //   return(
+    //     <Container>
+    //       <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    //         <ActivityIndicator/>
+    //       </View>
+    //       <FooterBar screen={tabScreens.graphics} />
+    //     </Container>
+    //   )
+    // }
+
+
+    
+    let chart;
+    if(this.state.selected1 == 'key1') {
+      if(this.state.isLoading){
+        return(
+          <Container>
+          <StatusBar backgroundColor="blue" barStyle="dark-content" />
+            <Text style={styles.title}>Gráficos</Text>
+          <View style={{marginTop: 20, borderWidth: 1, borderColor: '#DD6E42', width: 250, alignSelf: "center", marginBottom: 10}}>
+            <Picker
+                style={{width: 250, alignSelf: "center"}}
+                mode='dropdown'
+                selectedValue={this.state.selected1}
+                onValueChange={this.onValueChange.bind(this)}>
+                <Item color="#DD6E42" label='Selecione uma opção' value='key0' />
+                <Item label='Módulo A' value='key1' />
+                <Item label='Módulo B' value='key2' />
+                <Item label='Módulo C' value='key3' />
+                <Item label='Dados Históricos' value='key4' />
+                <Item label='Geral' value='key5' />
+            </Picker>
           </View>
-          <FooterBar screen={tabScreens.graphics} />
-        </Container>
-      )
+            <View  style={styles.container}>
+              <ActivityIndicator/>
+            </View>
+            <FooterBar screen={tabScreens.graphics} />
+          </Container>
+        )
+      } else {
+        chart = <View style={styles.container}>
+        <BarChart
+        data={[
+          { info: 'Temperatura', value: 29 },
+          { info: 'Umidade', value: 50 },
+          { info: 'Co2', value: 60 },
+        ]}
+        width={300}
+        theme={VictoryTheme.material}
+        x="info"
+        y="value"
+        title={"Módulo A"}
+        />
+        <BezierLineChart
+          data={{
+            labels: ["Jan", "Feb", "Mar", "Abr", "Mai", "Jun"],
+            datasets: [
+              {
+                data: [
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100
+                ]
+              }
+            ]
+          }}
+          width={300}
+          height={220}
+          title={"Módulo A"}
+          />  
+      </View>
+      }
+
     }
 
     return (
       <Container>
         <StatusBar backgroundColor="blue" barStyle="dark-content" />
-        <Segment style={{marginTop: 30, backgroundColor: 'white'}}>
+          <Text style={styles.title}>Gráficos</Text>
+        <View style={{marginTop: 20, borderWidth: 1, borderColor: '#DD6E42', width: 250, alignSelf: "center", marginBottom: 10}}>
+          <Picker
+              style={{width: 250, alignSelf: "center"}}
+              mode='dropdown'
+              selectedValue={this.state.selected1}
+              onValueChange={this.onValueChange.bind(this)}>
+              <Item color="#DD6E42" label='Selecione uma opção' value='key0' />
+              <Item label='Módulo A' value='key1' />
+              <Item label='Módulo B' value='key2' />
+              <Item label='Módulo C' value='key3' />
+              <Item label='Dados Históricos' value='key4' />
+              <Item label='Geral' value='key5' />
+          </Picker>
+        </View>
+        {/* <Segment style={{marginTop: 30, backgroundColor: 'white'}}>
           <Button
             style={{
               backgroundColor: this.state.seg === 1 ? "#DD6E42" : undefined,
@@ -183,21 +287,15 @@ export default class GraphicsScren extends React.Component {
           >
             <Text style={{ color: this.state.seg === 2 ? "#FFF" : "#DD6E42" }}>Histórico</Text>
           </Button>
-        </Segment>
-        { this.state.seg === 1 ?
-          (<ScrollView>
-            <View style={styles.container}>
-              {chartList}
-            </View>
+        </Segment> */}
+          <ScrollView>
+
+              <View style={styles.container}>
+                {/* {chartList} */}
+                {chart}
+              </View>
+
           </ScrollView>
-          ): (
-            <Container style={{ backgroundColor: '#FFF' }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Text> Alguma coisa aqui </Text>
-            </View>
-          </Container>
-          )
-        }
       <FooterBar screen={tabScreens.graphics} />
       </Container>
     );
@@ -210,6 +308,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    paddingTop: 10
-  }
+  },
+  border: {
+    borderWidth: 1,
+    borderColor: '#d6d7da',
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#575757',
+    textAlign: 'center',
+    marginTop: 50,
+  },
 });
