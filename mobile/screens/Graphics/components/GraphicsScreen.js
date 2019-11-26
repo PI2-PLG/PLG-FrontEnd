@@ -78,7 +78,7 @@ export default class GraphicsScren extends React.Component {
         seg: 1,
         isLoading: true,
         selectedItem: undefined,
-        selected1: '',
+        selected1: 'key0',
         results: {
             items: []
         }
@@ -132,6 +132,8 @@ export default class GraphicsScren extends React.Component {
     return true;
   }
   render() {
+
+    console.log(this.state.selected1)
 
     chartList = graphics.map(function(chart, i) {
 
@@ -207,7 +209,9 @@ export default class GraphicsScren extends React.Component {
             <FooterBar screen={tabScreens.graphics} />
           </Container>
         )
-      } else {
+      } 
+      
+      else {
         chart = <View style={styles.container}>
         <BarChart
         data={[
@@ -242,8 +246,13 @@ export default class GraphicsScren extends React.Component {
           title={"Módulo A"}
           />  
       </View>
-      }
+      } 
 
+    } else if (this.state.selected1 === 'key0'){
+      console.log('entrei');
+      chart = <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{marginTop: '50%'}}>Oiiiiiiiiiiiiiiiiii</Text>
+      </View>
     }
 
     return (
