@@ -3,7 +3,7 @@ import { logout } from '../../Login/action';
 import {
   StyleSheet,
   Image,
-  TouchableOpacity
+  StatusBar
 } from 'react-native';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import { Container, View, Text, Content, Card, CardItem, Body, Button } from 'native-base';
@@ -30,6 +30,8 @@ class ProfileScreen extends Component {
     const { username, name, email } = this.props;
     return (
     <Container>
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
+      <Text style={styles.title}>Perfil</Text>
       <View style={{flex: 1}}>
           <View style={styles.header}></View>
           <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
@@ -55,7 +57,7 @@ class ProfileScreen extends Component {
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: "#DD6E42",
+    backgroundColor: "white",
     height:200,
   },
   avatar: {
@@ -108,6 +110,13 @@ const styles = StyleSheet.create({
     width:250,
     borderRadius:30,
     backgroundColor: "#DD6E42",
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#575757',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });
 
