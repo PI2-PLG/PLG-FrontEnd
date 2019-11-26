@@ -3,7 +3,8 @@ import { logout } from '../../Login/action';
 import {
   StyleSheet,
   Image,
-  StatusBar
+  StatusBar,
+  BackHandler
 } from 'react-native';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import { Container, View, Text, Content, Card, CardItem, Body, Button } from 'native-base';
@@ -14,16 +15,36 @@ class ProfileScreen extends Component {
 
   constructor(props){
     super(props);
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     
     this.props = props;
 
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.HOME);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
   }
 
   __logout() {
     const { dispatch } = this.props;
     dispatch(logout());
     this.props.navigation.navigate(screens.LOGIN);
-}
+  }
 
   render() {
     const B = (props) => <Text style={{fontWeight: 'bold', color: '#696969'}}>{props.children}</Text>
