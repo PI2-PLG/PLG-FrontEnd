@@ -406,11 +406,14 @@ class HomeScreen extends React.Component {
 
         if(this.state.isLoading){
             return(
-              <View style={{flex: 1, padding: 20}}>
-                <ActivityIndicator/>
-              </View>
+              <Container>
+                <View style={{flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                  <ActivityIndicator/>
+                </View>
+                <FooterBar screen={tabScreens.home} />
+              </Container>
             )
-        }
+          }
 
         const { username, name, email } = this.props;
         return (
