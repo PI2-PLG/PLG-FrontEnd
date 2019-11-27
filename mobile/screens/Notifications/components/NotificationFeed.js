@@ -68,13 +68,13 @@ class NotificationFeed extends React.Component {
   }
   
   componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
+    return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/all-notifications/')
       .then((response) => response.json())
       .then((responseJson) => {
 
         this.setState({
           isLoading: false,
-          dataSource: responseJson.movies,
+          dataSource: responseJson,
         }, function(){
 
         });
@@ -97,7 +97,7 @@ class NotificationFeed extends React.Component {
       )
     }
 
-    const notificationList = notifications.map((notification, index) => (
+    const notificationList = this.state.dataSource.map((notification, index) => (
 
       <NotificationCard 
           key={index} 
