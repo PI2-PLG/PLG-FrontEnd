@@ -7,7 +7,7 @@ import BezierLineChart from './LineChart';
 import ChartPie from './PieChart';
 import StackChart from './StackChart'
 import { Container, Segment, Button, Text, Content, Picker } from "native-base";
-import { BackHandler, ActivityIndicator, StatusBar  } from 'react-native';
+import { BackHandler, ActivityIndicator, StatusBar, Image  } from 'react-native';
 
 
 
@@ -133,8 +133,6 @@ export default class GraphicsScren extends React.Component {
   }
   render() {
 
-    console.log(this.state.selected1)
-
     chartList = graphics.map(function(chart, i) {
 
       if(chart.type == 'pie_chart'){
@@ -249,9 +247,11 @@ export default class GraphicsScren extends React.Component {
       } 
 
     } else if (this.state.selected1 === 'key0'){
-      console.log('entrei');
       chart = <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{marginTop: '50%'}}>Oiiiiiiiiiiiiiiiiii</Text>
+        <Image
+          style={{width: 100, height: 100, marginTop: '50%', opacity: 0.3}}
+          source={require('./../../../assets/images/search.png')}
+        />
       </View>
     }
 
