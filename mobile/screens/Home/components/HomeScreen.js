@@ -331,7 +331,6 @@ var mapStyle =[
         ]
     }
 ]
-let image = <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
 
 const markers = [
   {

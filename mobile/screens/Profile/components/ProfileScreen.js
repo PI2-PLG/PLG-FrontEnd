@@ -79,7 +79,7 @@ class ProfileScreen extends Component {
 const styles = StyleSheet.create({
   header:{
     backgroundColor: "white",
-    height:200,
+    height:150,
   },
   avatar: {
     width: 130,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:130
+    marginTop:100
   },
   name:{
     fontSize:22,
