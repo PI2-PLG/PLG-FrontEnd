@@ -1,11 +1,11 @@
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout, InfoWindow } from 'react-native-maps';
 import { View, Text, Container } from 'native-base';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
-import { StyleSheet, Dimensions, Image, StatusBar, ActivityIndicator } from 'react-native';
+import { StyleSheet, Dimensions, Image, StatusBar, ActivityIndicator,TouchableHighlight } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 var mapStyle =[
@@ -385,13 +385,13 @@ class HomeScreen extends React.Component {
     }
 
     componentDidMount(){
-        return fetch('https://facebook.github.io/react-native/movies.json')
+        return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/modules-map/')
             .then((response) => response.json())
             .then((responseJson) => {
 
             this.setState({
                 isLoading: false,
-                dataSource: markers,
+                dataSource: responseJson,
             }, function(){
             });
 
@@ -400,8 +400,35 @@ class HomeScreen extends React.Component {
             console.error(error);
             });
     }
+    getMarkers = () => {
+        let markers = this.state.dataSource.map((marker, index) => {
+               return ( <MapView.Marker coordinate = {marker.coordinate}
+                key = {index}
+                >
+                <MapView.Callout>
+                    <View>
+                        <Text>{marker.title}, Lon:{marker.description}</Text>
+                    </View>
+                </MapView.Callout>
+                </MapView.Marker>
+            );
+        });
+        return markers;
+    }
 
     render() {
+
+        Object.values(this.state.dataSource).forEach(value => {
+            description = (value.description).split(',')
+            description = description.join("\n")
+            return description
+        });
+
+        if(this.state.dataSource == 'IN_MOTION') {
+            let image = <Image source={require('../../../assets/images/location1.png')} style={{ width: 40, height: 40 }} />
+        } else {
+            let image = <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} />
+        }
 
         if(this.state.isLoading){
             return(
@@ -419,7 +446,7 @@ class HomeScreen extends React.Component {
             <Container>
             <StatusBar backgroundColor="blue" barStyle="dark-content" />
             <View style={styles.container}>
-                <MapView
+            <MapView
                 style={styles.mapStyle}
                 provider={MapView.PROVIDER_GOOGLE}
                 onRegionChange={this._handleMapRegionChange}
@@ -427,14 +454,34 @@ class HomeScreen extends React.Component {
                 customMapStyle={mapStyle}
                 >
                 {this.state.dataSource.map((marker, i) => (
-                <Marker
+
+                <MapView.Marker
                     key={i}
-                    coordinate={marker.coordinate}
-                    title={marker.title}
-                    description={marker.description}
-                >
-                <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
-                </Marker>
+                    coordinate={marker.coordinate}>
+                    {marker.status == 'IN_MOTION' ? <Image source={require('../../../assets/images/location1.png')} style={{ width: 40, height: 40 }} /> 
+                    :marker.status == 'ONLINE' ?  <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} />
+                    :marker.status == 'FIRERISK' ?  <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 40, height: 40 }} />
+                    : <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 40, height: 40 }} />
+                    } 
+                    {/* {marker.status == 'ONLINE' ? 
+                    <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} /> : 
+                    <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 40, height: 40 }} />
+                    } */}
+                    {/* <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} /> */}
+                    <MapView.Callout tooltip style={{marginBottom: 15}}>
+                        <View style={styles.moduleInfo}>
+                            <Text>{marker.title}{"\n"}{description}</Text>
+                        </View>
+                        </MapView.Callout>
+                    </MapView.Marker>
+                // <Marker
+                //     key={i}
+                //     coordinate={marker.coordinate}
+                //     title={marker.title}
+                // >
+                  
+                // <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
+                // </Marker>
                 ))}
                 </MapView>
                 <View style={styles.cardLegend}>
@@ -475,6 +522,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  moduleInfo: {
+    backgroundColor: 'white', 
+    width: 200,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#d6d7da',
+    borderRadius: 20
   },
   mapStyle:{
     width: Dimensions.get('window').width,
