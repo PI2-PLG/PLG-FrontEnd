@@ -9,58 +9,178 @@ import StackChart from './StackChart'
 import { Container, Segment, Button, Text, Content, Picker } from "native-base";
 import { BackHandler, ActivityIndicator, StatusBar, Image  } from 'react-native';
 
-
-
-const graphics = [
+const mycharts = [
   {
-    "type": 'stack_chart',
-    "title": 'Módulos',
+    "module_name": "Módulo A",
+    "type": "bar_chart",
+    "title": "Módulo A - Temperatura x Humidade x Co2",
     "data": [
-      [{ 'x': 'A', 'y': 54 }, { 'x': 'B', 'y': 39 }, { 'x': 'C', 'y': 40 }], // humidade
-      [{ 'x': 'A', 'y': 30 }, { 'x': 'B', 'y': 26 }, { 'x': 'C', 'y': 29 }], // temperatura
-      [{ 'x': 'A', 'y': 60 }, { 'x': 'B', 'y': 55 }, { 'x': 'C', 'y': 50 }], // co2
+      { "info": 'Temperatura °', "value": 26 },
+      { "info": 'Umidade °', "value": 25 },
+      { "info": 'Co2 (PPM)', "value": 28 },
     ]
   },
   {
+    "module_name": "Módulo A",
     "type": "pie_chart",
-    "title": "Módulo 1 - Dados",
+    "title": "Módulo A - Porcentagem por status",
     "data": [
-      { "name": 'Humidade', "population": 52, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-      { "name": 'Temperatura', "population": 29, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
-      { "name": 'Co2', "population": 55, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Alerta', "population": 10, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Offline', "population": 2, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Online', "population": 4, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
     ]
   },
   {
+    "module_name": "Módulo A",
     "type": "line_chart",
-    "title": "Temperatura x Meses",
+    "title": "Módulo A - Temperatura x Dias",
     "data": {
 
-      "labels": ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
       "datasets": [
         {
           "data": [
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100,
-            Math.random() * 100
+            28,
+            31,
+            24,
+            29,
+            19,
+            26,
+            27
           ]
         }
       ]
     }
   },
   {
+    "module_name": "Módulo A",
+    "type": "line_chart",
+    "title": "Módulo A - Umidade x Dias",
+    "data": {
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
+      "datasets": [
+        {
+          "data": [
+            50,
+            46,
+            20,
+            16,
+            24,
+            60,
+            45
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "module_name": "Módulo A",
+    "type": "line_chart",
+    "title": "Módulo A - Co2 x Dias",
+    "data": {
+
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
+      "datasets": [
+        {
+          "data": [
+            245,
+            400,
+            300,
+            200,
+            120,
+            234,
+            222
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "module_name": "Módulo B",
     "type": "bar_chart",
-    "title": "Humidade x Dias",
+    "title": "Módulo B - Temperatura x Humidade x Co2",
     "data": [
-      { "quarter": 'seg', "earnings": 26 },
-      { "quarter": 'ter', "earnings": 25 },
-      { "quarter": 'qua', "earnings": 28 },
-      { "quarter": 'qui', "earnings": 25 },
-      { "quarter": 'sex', "earnings": 30 }
+      { "info": 'Temperatura °', "value": 26 },
+      { "info": 'Umidade °', "value": 25 },
+      { "info": 'Co2 (PPM)', "value": 28 },
     ]
   },
+  {
+    "module_name": "Módulo B",
+    "type": "pie_chart",
+    "title": "Módulo B - Porcentagem por status",
+    "data": [
+      { "name": 'Alerta', "population": 10, "color": '#a9eec2', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Offline', "population": 2, "color": '#fad284', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+      { "name": 'Online', "population": 4, "color": '#f38181', "legendFontColor": '#7F7F7F', "legendFontSize": 10 },
+    ]
+  },
+  {
+    "module_name": "Módulo B",
+    "type": "line_chart",
+    "title": "Módulo B - Temperatura x Dias",
+    "data": {
+
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
+      "datasets": [
+        {
+          "data": [
+            28,
+            31,
+            24,
+            29,
+            19,
+            26,
+            27
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "module_name": "Módulo B",
+    "type": "line_chart",
+    "title": "Módulo B - Umidade x Dias",
+    "data": {
+
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
+      "datasets": [
+        {
+          "data": [
+            50,
+            46,
+            20,
+            16,
+            24,
+            60,
+            45
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "module_name": "Módulo B",
+    "type": "line_chart",
+    "title": "Módulo B - Co2 x Dias",
+    "data": {
+      "labels": ['Seg', 'Ter', 'Quar', 'Quin', 'Sex', 'Sab', 'Dom'],
+      "datasets": [
+        {
+          "data": [
+            245,
+            400,
+            300,
+            200,
+            120,
+            234,
+            222
+          ]
+        }
+      ]
+    }
+  },
+  
 ]
 
 const Item = Picker.Item;
@@ -75,10 +195,10 @@ export default class GraphicsScren extends React.Component {
     this.props = props;
 
     this.state = {
-        seg: 1,
         isLoading: true,
         selectedItem: undefined,
         selected1: 'key0',
+        dataSource: '',
         results: {
             items: []
         }
@@ -106,7 +226,6 @@ export default class GraphicsScren extends React.Component {
           isLoading: false,
           dataSource: responseJson,
         }, function(){
-
         });
 
       })
@@ -133,8 +252,12 @@ export default class GraphicsScren extends React.Component {
   }
   render() {
 
-    chartList = graphics.map(function(chart, i) {
+  //   let serviceItems = this.state.dataSource.map( (s, i) => {
+  //     return <Picker.Item key={i} value={s} label={s} />
+  // });
 
+
+    chartList = mycharts.map(function(chart, i) {
       if(chart.type == 'pie_chart'){
         return <ChartPie
           key={i}
@@ -163,23 +286,21 @@ export default class GraphicsScren extends React.Component {
         height={220}
         title={chart.title}
         />  
+      } else if(chart.type == 'bar_chart') {
+        return <BarChart
+          key={i}
+          data={chart.data}
+          width={300}
+          theme={VictoryTheme.material}
+          x="info"
+          y="value"
+          title={chart.title}
+        />
       }
 
   }.bind(this));
 
-    // if(this.state.isLoading){
-    //   return(
-    //     <Container>
-    //       <View style={{flex: 1, padding: 20, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    //         <ActivityIndicator/>
-    //       </View>
-    //       <FooterBar screen={tabScreens.graphics} />
-    //     </Container>
-    //   )
-    // }
-
-
-    
+   
     let chart;
     if(this.state.selected1 == 'key1') {
       if(this.state.isLoading){
@@ -187,6 +308,7 @@ export default class GraphicsScren extends React.Component {
           <Container>
           <StatusBar backgroundColor="blue" barStyle="dark-content" />
             <Text style={styles.title}>Gráficos</Text>
+
           <View style={{marginTop: 20, borderWidth: 1, borderColor: '#DD6E42', width: 250, alignSelf: "center", marginBottom: 10}}>
             <Picker
                 style={{width: 250, alignSelf: "center"}}
@@ -210,40 +332,7 @@ export default class GraphicsScren extends React.Component {
       } 
       
       else {
-        chart = <View style={styles.container}>
-        <BarChart
-        data={[
-          { info: 'Temperatura', value: 29 },
-          { info: 'Umidade', value: 50 },
-          { info: 'Co2', value: 60 },
-        ]}
-        width={300}
-        theme={VictoryTheme.material}
-        x="info"
-        y="value"
-        title={"Módulo A"}
-        />
-        <BezierLineChart
-          data={{
-            labels: ["Jan", "Feb", "Mar", "Abr", "Mai", "Jun"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              }
-            ]
-          }}
-          width={300}
-          height={220}
-          title={"Módulo A"}
-          />  
-      </View>
+        chart = chartList
       } 
 
     } else if (this.state.selected1 === 'key0'){
@@ -260,18 +349,19 @@ export default class GraphicsScren extends React.Component {
         <StatusBar backgroundColor="blue" barStyle="dark-content" />
           <Text style={styles.title}>Gráficos</Text>
         <View style={{marginTop: 20, borderWidth: 1, borderColor: '#DD6E42', width: 250, alignSelf: "center", marginBottom: 10}}>
+
           <Picker
-              style={{width: 250, alignSelf: "center"}}
-              mode='dropdown'
-              selectedValue={this.state.selected1}
-              onValueChange={this.onValueChange.bind(this)}>
-              <Item color="#DD6E42" label='Selecione uma opção' value='key0' />
-              <Item label='Módulo A' value='key1' />
-              <Item label='Módulo B' value='key2' />
-              <Item label='Módulo C' value='key3' />
-              <Item label='Dados Históricos' value='key4' />
-              <Item label='Geral' value='key5' />
-          </Picker>
+                style={{width: 250, alignSelf: "center"}}
+                mode='dropdown'
+                selectedValue={this.state.selected1}
+                onValueChange={this.onValueChange.bind(this)}>
+                <Item color="#DD6E42" label='Selecione uma opção' value='key0' />
+                <Item label='Módulo A' value='key1' />
+                <Item label='Módulo B' value='key2' />
+                <Item label='Módulo C' value='key3' />
+                <Item label='Dados Históricos' value='key4' />
+                <Item label='Geral' value='key5' />
+            </Picker>
         </View>
         {/* <Segment style={{marginTop: 30, backgroundColor: 'white'}}>
           <Button

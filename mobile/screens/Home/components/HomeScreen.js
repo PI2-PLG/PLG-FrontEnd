@@ -332,34 +332,6 @@ var mapStyle =[
     }
 ]
 
-const markers = [
-  {
-    coordinate: {
-      latitude: -15.98932261,
-      longitude: -48.04509044,
-    },
-    title: "Módulo A",
-    description: "Temperatura 50º",
-  },
-  {
-    coordinate: {
-      latitude: -15.990846,
-      longitude: -48.045164,
-    },
-    title: "Módulo B",
-    description: "Temperatura 28º",
-  },
-  {
-    coordinate: {
-      latitude: -15.989804,
-      longitude: -48.043127,
-    },
-    title: "Módulo C",
-    description: "Temperatura 31º",
-  }
-]
-
-
 class HomeScreen extends React.Component {
 
     constructor(props) {
