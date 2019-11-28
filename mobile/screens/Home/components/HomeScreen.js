@@ -350,7 +350,6 @@ class HomeScreen extends React.Component {
                 heading: 3,
                 zoom: 17,
               },
-              marker: markers,
               isLoading: true,
               dataSource: '',
         }
