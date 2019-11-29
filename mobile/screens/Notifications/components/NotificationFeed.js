@@ -4,7 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import NotificationCard from './NotificationCard';
-import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, StatusBar } from 'react-native';
+import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, StatusBar, FlatList } from 'react-native';
 
 const notifications = [
   {
@@ -47,7 +47,7 @@ class NotificationFeed extends React.Component {
   constructor(props){
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.state ={ isLoading: true}
+    this.state = { isLoading: true }
   }
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -68,13 +68,13 @@ class NotificationFeed extends React.Component {
   }
   
   componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
+    return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/all-notifications/')
       .then((response) => response.json())
       .then((responseJson) => {
 
         this.setState({
           isLoading: false,
-          dataSource: responseJson.movies,
+          dataSource: responseJson,
         }, function(){
 
         });
@@ -97,7 +97,7 @@ class NotificationFeed extends React.Component {
       )
     }
 
-    const notificationList = notifications.map((notification, index) => (
+    const notificationList = this.state.dataSource.map((notification, index) => (
 
       <NotificationCard 
           key={index} 

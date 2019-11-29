@@ -44,7 +44,7 @@ export default class NotificationCard extends React.Component {
 
         let image;
 
-        if (type == 'alert' ) {
+        if (type == 'alert') {
           image = <Content>
           <Card style={{ width: 350, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
             <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
@@ -71,7 +71,7 @@ export default class NotificationCard extends React.Component {
             </CardItem>
           </Card>
         </Content>
-        } else {
+        } else if(type == 'off') {
           image = <Content>
           <Card style={{ width: 350, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
             <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
@@ -79,6 +79,29 @@ export default class NotificationCard extends React.Component {
                     <Image
                       style={{width: 60, height: 60}}
                       source={require('./../../../assets/images/switch-off.png')}
+                    />
+                  </Left>
+                  <Body>
+                  <Text style={styles.titleNotificatoin}>{ message }</Text>
+                  </Body>
+              </CardItem>
+              <CardItem footer bordered style={{borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+                <Body>
+                </Body>
+                <Right>
+                  <Text style={styles.footerText}>{date} {hour}</Text>
+                </Right>
+            </CardItem>
+          </Card>
+        </Content>
+        } else if(type == 'inmotion') {
+          image = <Content>
+          <Card style={{ width: 350, borderRadius: 20, backgroundColor: '#f8f8f8'}}>
+            <CardItem style={{borderRadius: 20, backgroundColor: '#f8f8f8', alignItems: 'center', alignContent: 'center'}}>
+              <Left style={{flex:0.5}}>
+                    <Image
+                      style={{width: 60, height: 60}}
+                      source={require('./../../../assets/images/robbery.png')}
                     />
                   </Left>
                   <Body>

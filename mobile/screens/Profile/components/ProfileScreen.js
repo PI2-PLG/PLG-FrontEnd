@@ -3,7 +3,8 @@ import { logout } from '../../Login/action';
 import {
   StyleSheet,
   Image,
-  TouchableOpacity
+  StatusBar,
+  BackHandler
 } from 'react-native';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import { Container, View, Text, Content, Card, CardItem, Body, Button } from 'native-base';
@@ -14,31 +15,74 @@ class ProfileScreen extends Component {
 
   constructor(props){
     super(props);
+
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     
     this.props = props;
 
+    this.state = { isLoading: true }
+
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+      this.props.navigation.navigate(screens.HOME);
+      return true;
+  }
+
+  handleBackButton(){
+    this.props.navigation.popToTop();
+    return true;
   }
 
   __logout() {
     const { dispatch } = this.props;
     dispatch(logout());
     this.props.navigation.navigate(screens.LOGIN);
-}
+  }
+
+  async componentDidMount(){
+    return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/total-modules')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.modules_count,
+        }, function(){
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+
+  }
 
   render() {
     const B = (props) => <Text style={{fontWeight: 'bold', color: '#696969'}}>{props.children}</Text>
     const { username, name, email } = this.props;
+
     return (
     <Container>
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
+      <Text style={styles.title}>Perfil</Text>
       <View style={{flex: 1}}>
           <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
+          <Image style={styles.avatar} source={require('../../../assets/images/user.png')}/>
           <View style={styles.body}>
             <View style={styles.bodyContent}>
               <Text style={styles.name}>{name}</Text>
               <Text style={styles.info}>{email}</Text>
               <Text style={styles.description}><B>Usuário:</B>{username}</Text>
-              <Text style={styles.description}><B>Módulos cadastrados:</B> 3</Text>
+              <Text style={styles.description}><B>Módulos cadastrados:</B> {this.state.dataSource}</Text>
               <Button style={styles.buttonContainer}
                 onPress = {() => this.__logout()}
               >
@@ -55,8 +99,8 @@ class ProfileScreen extends Component {
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: "#DD6E42",
-    height:200,
+    backgroundColor: "white",
+    height:150,
   },
   avatar: {
     width: 130,
@@ -67,7 +111,8 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:130
+    marginTop:90,
+    marginBottom: 10
   },
   name:{
     fontSize:22,
@@ -108,6 +153,13 @@ const styles = StyleSheet.create({
     width:250,
     borderRadius:30,
     backgroundColor: "#DD6E42",
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#575757',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });
 

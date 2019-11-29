@@ -6,9 +6,9 @@ import { login, getCurrentUser } from '../action';
 import { Image, StyleSheet, ImageBackground  } from 'react-native';
 import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Alert } from "react-native";
+import { Alert, ActivityIndicator } from "react-native";
 
-const PUSH_ENDPOINT = 'http://192.168.15.6:8000/login/';
+const PUSH_ENDPOINT = 'http://loboguara.eastus.cloudapp.azure.com:8000/login/';
 
 const styles = StyleSheet.create({
     container: {
@@ -44,11 +44,14 @@ class LoginScreen extends React.Component {
             usernameError: "",
             password: '',
             passwordError: "",
-            isLoading: true
+            isLoading: false
         }
     }
 
     __submit(username, password){
+        this.setState({
+            isLoading: true,
+        })
         const { dispatch } = this.props;
         return fetch(PUSH_ENDPOINT, {
             method: 'POST',
@@ -69,6 +72,9 @@ class LoginScreen extends React.Component {
                 dispatch(getCurrentUser(responseJson));
                 this.props.navigation.navigate(screens.HOME);
             } else if(responseJson.response == 'accont_disabled') {
+                this.setState({
+                    isLoading: false,
+                })
                 Alert.alert(
                     'Sua conta não está ativa!',
                     '',
@@ -78,15 +84,21 @@ class LoginScreen extends React.Component {
                     {cancelable: false},
                   );
             } else if(responseJson.response == 'invalid_login') {
+                this.setState({
+                    isLoading: false,
+                })
                 Alert.alert(
-                    'Senha ou usuário errado!',
                     '',
+                    'Sua senha ou seu usuário inválido',
                     [
                       {text: 'OK'},
                     ],
                     {cancelable: false},
                 );
             } else if(responseJson.response == 'unable_to_process') {
+                this.setState({
+                    isLoading: false,
+                })
                 Alert.alert(
                     'Não consiguimos processar deu login. Desculpe!',
                     'Tente novamente mais tarde',
@@ -144,6 +156,13 @@ class LoginScreen extends React.Component {
                                 borderRadius: 5,
                                 padding: 5
                             }}>LOBO-GUARÁ</H1>
+                            {this.state.isLoading ? 
+                            
+                                <View style={{flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                                    <ActivityIndicator color="#DD6E42" />
+                                </View>
+                            
+                            : null}
                         </View>
                     </Row>
                     <Row size={50}>

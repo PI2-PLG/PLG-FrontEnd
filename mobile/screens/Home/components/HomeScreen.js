@@ -1,17 +1,12 @@
 import React from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout, InfoWindow } from 'react-native-maps';
 import { View, Text, Container } from 'native-base';
 import { connect } from 'react-redux';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
-import { StyleSheet, Dimensions, Image, StatusBar } from 'react-native';
+import { StyleSheet, Dimensions, Image, StatusBar, ActivityIndicator,TouchableHighlight } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-
-const { width, height } = Dimensions.get("window");
-
-const CARD_HEIGHT = height / 4;
-const CARD_WIDTH = 50;
 
 var mapStyle =[
     {
@@ -336,105 +331,131 @@ var mapStyle =[
         ]
     }
 ]
-let image = <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
-
-const markers = [
-  {
-    coordinate: {
-      latitude: -15.98932261,
-      longitude: -48.04509044,
-    },
-    title: "Módulo A",
-    description: "Temperatura 50º",
-  },
-  {
-    coordinate: {
-      latitude: -15.990846,
-      longitude: -48.045164,
-    },
-    title: "Módulo B",
-    description: "Temperatura 28º",
-  },
-  {
-    coordinate: {
-      latitude: -15.989804,
-      longitude: -48.043127,
-    },
-    title: "Módulo C",
-    description: "Temperatura 31º",
-  }
-]
-
 
 class HomeScreen extends React.Component {
 
-  state = {
-    camera: {
-      center:{
-        latitude: -15.9896383,
-        longitude: -48.0440679,
-      },
-      altitude: 1216,
-      pitch: 3,
-      heading: 3,
-      zoom: 17,
-    },
-  };
+    constructor(props) {
+        super(props);
 
-  render() {
-    const { username, name, email } = this.props;
-    return (
-      <Container>
-      <StatusBar backgroundColor="blue" barStyle="dark-content" />
-      <View style={styles.container}>
-        <MapView
-          style={styles.mapStyle}
-          provider={MapView.PROVIDER_GOOGLE}
-          onRegionChange={this._handleMapRegionChange}
-          camera={this.state.camera}
-          customMapStyle={mapStyle}
-        >
-        {markers.map((marker, i) => (
-          <Marker
-            key={i}
-            coordinate={marker.coordinate}
-            title={marker.title}
-            description={marker.description}
-          >
-          <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
-          </Marker>
-        ))}
-        </MapView>
-        <View style={styles.cardLegend}>
-            <Grid>
-                <Col>
-                    <Row>
-                        <Image source={require('../../../assets/images/location.png')} style={{ width: 25, height: 25 }} />
-                        <Text style={styles.textLegend}>Ativo</Text>
-                    </Row>
-                    <Row>
-                        <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 25, height: 25 }} />
-                        <Text style={styles.textLegend}>Inativo</Text>
-                    </Row>
-                </Col>
-                <Col>
-                    <Row>
-                        <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 25, height: 25 }} />
-                        <Text style={styles.textLegend}>Perigo</Text>
-                    </Row>
-                    <Row>
-                        <Image source={require('../../../assets/images/location1.png')} style={{ width: 25, height: 25 }} />
-                        <Text style={styles.textLegend}>Movimento</Text>
-                    </Row>
-                </Col>
-            </Grid>
-        </View>
-      </View>
-      <FooterBar screen={tabScreens.home} />
-      </Container>
+        this.props = props;
 
-    );
-  }
+        this.state = {
+            camera: {
+                center:{
+                  latitude: -15.9896383,
+                  longitude: -48.0440679,
+                },
+                altitude: 1216,
+                pitch: 3,
+                heading: 3,
+                zoom: 17,
+              },
+              isLoading: true,
+              dataSource: '',
+        }
+    }
+
+    componentDidMount(){
+        return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/modules-map/')
+            .then((response) => response.json())
+            .then((responseJson) => {
+
+            this.setState({
+                isLoading: false,
+                dataSource: responseJson,
+            }, function(){
+            });
+
+            })
+            .catch((error) =>{
+            console.error(error);
+            });
+    }
+    render() {
+
+        Object.values(this.state.dataSource).forEach(value => {
+            description = (value.description).split(',')
+            description = description.join("\n")
+            return description
+        });
+
+        if(this.state.dataSource == 'IN_MOTION') {
+            let image = <Image source={require('../../../assets/images/location1.png')} style={{ width: 40, height: 40 }} />
+        } else {
+            let image = <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} />
+        }
+
+        if(this.state.isLoading){
+            return(
+              <Container>
+                <View style={{flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                  <ActivityIndicator/>
+                </View>
+                <FooterBar screen={tabScreens.home} />
+              </Container>
+            )
+          }
+
+        const { username, name, email } = this.props;
+        return (
+            <Container>
+            <StatusBar backgroundColor="blue" barStyle="dark-content" />
+            <View style={styles.container}>
+            <MapView
+                style={styles.mapStyle}
+                provider={MapView.PROVIDER_GOOGLE}
+                onRegionChange={this._handleMapRegionChange}
+                camera={this.state.camera}
+                customMapStyle={mapStyle}
+                >
+                {this.state.dataSource.map((marker, i) => (
+
+                <MapView.Marker
+                    key={i}
+                    coordinate={marker.coordinate}>
+                    {marker.status == 'IN_MOTION' ? <Image source={require('../../../assets/images/location1.png')} style={{ width: 40, height: 40 }} /> 
+                    :marker.status == 'ONLINE' ?  <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} />
+                    :marker.status == 'FIRERISK' ?  <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 40, height: 40 }} />
+                    : <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 40, height: 40 }} />
+                    } 
+                    <MapView.Callout tooltip style={{marginBottom: 15}}>
+                        <View style={styles.moduleInfo}>
+                            <Text>{marker.title}{"\n"}{description}</Text>
+                        </View>
+                        </MapView.Callout>
+                    </MapView.Marker>
+                ))}
+                </MapView>
+                <View style={styles.cardLegend}>
+                    <Grid>
+                        <Col>
+                            <Row>
+                                <Image source={require('../../../assets/images/location.png')} style={{ width: 25, height: 25 }} />
+                                <Text style={styles.textLegend}>Ativo</Text>
+                            </Row>
+                            <Row>
+                                <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 25, height: 25 }} />
+                                <Text style={styles.textLegend}>Inativo</Text>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row>
+                                <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 25, height: 25 }} />
+                                <Text style={styles.textLegend}>Perigo</Text>
+                            </Row>
+                            <Row>
+                                <Image source={require('../../../assets/images/location1.png')} style={{ width: 25, height: 25 }} />
+                                <Text style={styles.textLegend}>Movimento</Text>
+                            </Row>
+                        </Col>
+                    </Grid>
+                </View>
+            </View>
+            <FooterBar screen={tabScreens.home} />
+            </Container>
+
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -443,6 +464,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  moduleInfo: {
+    backgroundColor: 'white', 
+    width: 200,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#d6d7da',
+    borderRadius: 20
   },
   mapStyle:{
     width: Dimensions.get('window').width,
@@ -460,7 +489,7 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
   },
   textLegend: {
-      fontSize: 10
+    fontSize: 10
   }
 });
 
