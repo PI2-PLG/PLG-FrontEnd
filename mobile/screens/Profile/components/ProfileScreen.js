@@ -20,6 +20,8 @@ class ProfileScreen extends Component {
     
     this.props = props;
 
+    this.state = { isLoading: true }
+
   }
 
   componentWillMount() {
@@ -46,22 +48,41 @@ class ProfileScreen extends Component {
     this.props.navigation.navigate(screens.LOGIN);
   }
 
+  async componentDidMount(){
+    return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/total-modules')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson.modules_count,
+        }, function(){
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+
+  }
+
   render() {
     const B = (props) => <Text style={{fontWeight: 'bold', color: '#696969'}}>{props.children}</Text>
     const { username, name, email } = this.props;
+
     return (
     <Container>
       <StatusBar backgroundColor="blue" barStyle="dark-content" />
       <Text style={styles.title}>Perfil</Text>
       <View style={{flex: 1}}>
           <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar3.png'}}/>
+          <Image style={styles.avatar} source={require('../../../assets/images/user.png')}/>
           <View style={styles.body}>
             <View style={styles.bodyContent}>
               <Text style={styles.name}>{name}</Text>
               <Text style={styles.info}>{email}</Text>
               <Text style={styles.description}><B>Usuário:</B>{username}</Text>
-              <Text style={styles.description}><B>Módulos cadastrados:</B> 3</Text>
+              <Text style={styles.description}><B>Módulos cadastrados:</B> {this.state.dataSource}</Text>
               <Button style={styles.buttonContainer}
                 onPress = {() => this.__logout()}
               >

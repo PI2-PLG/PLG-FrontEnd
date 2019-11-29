@@ -47,7 +47,7 @@ class NotificationFeed extends React.Component {
   constructor(props){
     super(props);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.state ={ isLoading: true}
+    this.state = { isLoading: true }
   }
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);

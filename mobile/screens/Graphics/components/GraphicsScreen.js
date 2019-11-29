@@ -182,18 +182,6 @@ const mycharts = [
   },
   
 ]
-
-function getMoviesFromApiAsync() {
-  return fetch('https://facebook.github.io/react-native/movies.json')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson.movies;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
-
 const Item = Picker.Item;
 
 export default class GraphicsScren extends React.Component {
