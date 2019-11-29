@@ -371,22 +371,6 @@ class HomeScreen extends React.Component {
             console.error(error);
             });
     }
-    getMarkers = () => {
-        let markers = this.state.dataSource.map((marker, index) => {
-               return ( <MapView.Marker coordinate = {marker.coordinate}
-                key = {index}
-                >
-                <MapView.Callout>
-                    <View>
-                        <Text>{marker.title}, Lon:{marker.description}</Text>
-                    </View>
-                </MapView.Callout>
-                </MapView.Marker>
-            );
-        });
-        return markers;
-    }
-
     render() {
 
         Object.values(this.state.dataSource).forEach(value => {

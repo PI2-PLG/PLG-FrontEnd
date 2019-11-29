@@ -8,7 +8,7 @@ import InputField from '../../../shared/components/InputField'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Alert } from "react-native";
 
-const PUSH_ENDPOINT = 'http://192.168.15.6:8000/login/';
+const PUSH_ENDPOINT = 'http://loboguara.eastus.cloudapp.azure.com:8000/login/';
 
 const styles = StyleSheet.create({
     container: {

@@ -183,6 +183,17 @@ const mycharts = [
   
 ]
 
+function getMoviesFromApiAsync() {
+  return fetch('https://facebook.github.io/react-native/movies.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson.movies;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 const Item = Picker.Item;
 
 export default class GraphicsScren extends React.Component {
@@ -207,8 +218,8 @@ export default class GraphicsScren extends React.Component {
   
   onValueChange (value) {
     this.setState({
+        isLoading: true,
         selected1 : value,
-        isLoading: true
     });
 
     setTimeout(() => {
@@ -217,8 +228,8 @@ export default class GraphicsScren extends React.Component {
       });
     }, 100);
   }
-  componentDidMount(){
-    return fetch('https://jsonplaceholder.typicode.com/comments')
+  async componentDidMount(){
+    return fetch('http://168.62.37.157:8000/all-charts')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -232,6 +243,7 @@ export default class GraphicsScren extends React.Component {
       .catch((error) =>{
         console.error(error);
       });
+
   }
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
@@ -251,54 +263,58 @@ export default class GraphicsScren extends React.Component {
     return true;
   }
   render() {
-
+    
   //   let serviceItems = this.state.dataSource.map( (s, i) => {
   //     return <Picker.Item key={i} value={s} label={s} />
   // });
 
+    if(this.state.isLoading == false) {
 
-    chartList = mycharts.map(function(chart, i) {
-      if(chart.type == 'pie_chart'){
-        return <ChartPie
+      chartList = this.state.dataSource.map(function(chart, i) {
+        console.log(chart.type)
+        if(chart.type == 'pie_chart'){
+          return <ChartPie
+            key={i}
+            data={chart.data}
+            width={300}
+            height={200}
+            title={chart.title}
+          />       
+        }
+        else if (chart.type == 'stack_chart') {
+            return <StackChart 
+            key={i}
+            width={300}
+            theme={VictoryTheme.material}
+            title={chart.title}
+            data1 = {chart.data[0]}
+            data2 = {chart.data[1]}
+            data3 = {chart.data[2]}
+          /> 
+        }
+        else if (chart.type == 'line_chart') {
+          return <BezierLineChart
           key={i}
           data={chart.data}
-          width={300}
-          height={200}
+          width={350}
+          height={220}
           title={chart.title}
-        />       
-      }
-      else if (chart.type == 'stack_chart') {
-          return <StackChart 
-          key={i}
-          width={300}
-          theme={VictoryTheme.material}
-          title={chart.title}
-          data1 = {chart.data[0]}
-          data2 = {chart.data[1]}
-          data3 = {chart.data[2]}
-        /> 
-      }
-      else if (chart.type == 'line_chart') {
-        return <BezierLineChart
-        key={i}
-        data={chart.data}
-        width={300}
-        height={220}
-        title={chart.title}
-        />  
-      } else if(chart.type == 'bar_chart') {
-        return <BarChart
-          key={i}
-          data={chart.data}
-          width={300}
-          theme={VictoryTheme.material}
-          x="info"
-          y="value"
-          title={chart.title}
-        />
-      }
+          />  
+        } else if(chart.type == 'bar_chart') {
+          return <BarChart
+            key={i}
+            data={chart.data}
+            width={300}
+            theme={VictoryTheme.material}
+            x="info"
+            y="value"
+            title={chart.title}
+          />
+        }
+  
+    }.bind(this));
 
-  }.bind(this));
+    }
 
    
     let chart;
