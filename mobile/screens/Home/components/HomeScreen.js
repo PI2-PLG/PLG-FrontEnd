@@ -418,25 +418,12 @@ class HomeScreen extends React.Component {
                     :marker.status == 'FIRERISK' ?  <Image source={require('../../../assets/images/location_fire.png')} style={{ width: 40, height: 40 }} />
                     : <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 40, height: 40 }} />
                     } 
-                    {/* {marker.status == 'ONLINE' ? 
-                    <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} /> : 
-                    <Image source={require('../../../assets/images/location_desactivate.png')} style={{ width: 40, height: 40 }} />
-                    } */}
-                    {/* <Image source={require('../../../assets/images/location.png')} style={{ width: 40, height: 40 }} /> */}
                     <MapView.Callout tooltip style={{marginBottom: 15}}>
                         <View style={styles.moduleInfo}>
                             <Text>{marker.title}{"\n"}{description}</Text>
                         </View>
                         </MapView.Callout>
                     </MapView.Marker>
-                // <Marker
-                //     key={i}
-                //     coordinate={marker.coordinate}
-                //     title={marker.title}
-                // >
-                  
-                // <Image source={require('../../../assets/images/location.png')} style={{ width: 50, height: 50 }} />
-                // </Marker>
                 ))}
                 </MapView>
                 <View style={styles.cardLegend}>

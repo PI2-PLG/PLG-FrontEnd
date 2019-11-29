@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
     marginBottom:10,
     alignSelf:'center',
     position: 'absolute',
-    marginTop:100
+    marginTop:90,
+    marginBottom: 10
   },
   name:{
     fontSize:22,

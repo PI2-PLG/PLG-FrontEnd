@@ -4,7 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import FooterBar, { tabScreens } from '../../../shared/components/FooterBar';
 import NotificationCard from './NotificationCard';
-import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, StatusBar } from 'react-native';
+import { StyleSheet, ScrollView, BackHandler, ActivityIndicator, StatusBar, FlatList } from 'react-native';
 
 const notifications = [
   {

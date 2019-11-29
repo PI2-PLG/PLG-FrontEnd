@@ -97,7 +97,7 @@ const switchStacks = createSwitchNavigator(
         ProfileScreen: ProfileStack
     },
     {
-        initialRouteName: 'GraphicsScreen',
+        initialRouteName: 'LoginScreen',
         defaultNavigationOptions: {
             header: null,
             gesturesEnabled: false
