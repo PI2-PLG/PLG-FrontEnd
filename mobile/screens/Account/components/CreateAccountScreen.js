@@ -4,7 +4,7 @@ import { usernameValidator, passwordValidator, nameValidator, emailValidator} fr
 import InputField from '../../../shared/components/InputField'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import { StyleSheet, Alert, BackHandler } from 'react-native';
+import { StyleSheet, Alert, BackHandler, ActivityIndicator } from 'react-native';
 
 
 const PUSH_ENDPOINT = 'http://loboguara.eastus.cloudapp.azure.com:8000/new-user/';
@@ -38,7 +38,8 @@ class CreateAccountScreen extends React.Component {
         username: '',
         usernameError: "",
         password: '',
-        passwordError: ""
+        passwordError: "",
+        isLoading: false,
     }
   }
   componentWillMount() {
@@ -60,6 +61,9 @@ class CreateAccountScreen extends React.Component {
   }
 
   async registerForPushNotificationsAsync(name, password, username, email) {
+    this.setState({
+      isLoading: true,
+    })
     const { status: existingStatus } = await Permissions.getAsync(
       Permissions.NOTIFICATIONS
     );
@@ -105,6 +109,9 @@ class CreateAccountScreen extends React.Component {
     }).then((response) => response.json())
     .then((responseJson) => {
       if(responseJson.response == 'user_successfully_created'){
+        this.setState({
+          isLoading: false,
+        })
         Alert.alert(
           'Cadastro feito com sucesso!',
           'Agora é só fazer o login.',
@@ -114,6 +121,9 @@ class CreateAccountScreen extends React.Component {
           {cancelable: false},
         );
       } else {
+        this.setState({
+          isLoading: false,
+        })
         Alert.alert(
           'O usuário já existe!',
           'Escolha outro usuário e tente novamente',
@@ -175,6 +185,13 @@ class CreateAccountScreen extends React.Component {
         <View>
           <Text style={styles.title}>Criar Conta</Text>
         </View>
+        {this.state.isLoading ? 
+                            
+            <View style={{flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator color="#DD6E42" />
+            </View>
+        
+        : null}
         <Card transparent>
           <CardItem>
           <Content>
