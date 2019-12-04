@@ -24,15 +24,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": true
     },
     "android":{
       "package": "ca.projetoloboguara",
+      "googleServicesFile": "./google-services.json",
       "config":{
         "googleMaps": {
-            "apiKey": "AIzaSyBIykWbj5eVnWG1tXxflSFsR0o1YBc2OFQ",
-        },
-      },
-    },
+            "apiKey": "AIzaSyBbM_oLQaFxUwS8mVUO-L8F_lhDWKvq5v8"
+        }
+      }
+    }
   }
 }

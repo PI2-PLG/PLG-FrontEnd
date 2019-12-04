@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "304553114841",
+    "firebase_url": "https://lobo-guara-88fc2.firebaseio.com",
+    "project_id": "lobo-guara-88fc2",
+    "storage_bucket": "lobo-guara-88fc2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304553114841:android:42918b1f88531e5a61d2c8",
+        "android_client_info": {
+          "package_name": "ca.projetoloboguara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304553114841-8f9ekh2ci5h4n21sbhsuhnprvjk8a9e5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfhwegtUnr-bVWJ_-ipK9mX5UmT-nhcZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304553114841-8f9ekh2ci5h4n21sbhsuhnprvjk8a9e5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
