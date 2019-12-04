@@ -86,6 +86,15 @@ class CreateAccountScreen extends React.Component {
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
 
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('chat-messages', {
+        name: 'Chat messages',
+        sound: true,
+      });
+    }
+
+    console.log(token)
+
     const { navigate } = this.props.navigation;
   
     // POST the token to your backend server from where you can retrieve it to send push notifications.
