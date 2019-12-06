@@ -44,7 +44,7 @@ export default class GraphicsScren extends React.Component {
     }, 100);
   }
   async componentDidMount(){
-    return fetch('http://168.62.37.157:8000/all-charts')
+    return fetch('http://loboguara.eastus.cloudapp.azure.com:8000/all-charts')
       .then((response) => response.json())
       .then((responseJson) => {
 
